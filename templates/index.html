@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Simple Audio Room (WebRTC + Flask)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, Arial; max-width:900px; margin:20px auto; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+    input, button { padding:8px 10px; border-radius:8px; border:1px solid #ddd; }
+    #remotes { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-top:12px; }
+    .tile { border:1px solid #eee; padding:8px; border-radius:8px; }
+    audio { width:100%; }
+  </style>
+</head>
+<body>
+  <h2>Simple Audio Room</h2>
+
+  <div class="controls">
+    <input id="roomInput" placeholder="Room name" value="demo-room" />
+    <input id="nameInput" placeholder="Your name (optional)" />
+    <button id="joinBtn">Join Room</button>
+    <button id="leaveBtn" disabled>Leave</button>
+    <button id="muteBtn" disabled>🎙️ Unmute</button>
+    <span id="status">Not joined</span>
+  </div>
+
+  <div id="remotes"></div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io(); // connects to same host
+    const pcs = {};      // peerId -> RTCPeerConnection
+    const localAudioEls = {}; // peerId -> audio element for remote audio
+    let localStream = null;
+    let joinedRoom = null;
+    let myId = null;
+    let micOn = false;
+
+    const joinBtn = document.getElementById('joinBtn');
+    const leaveBtn = document.getElementById('leaveBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const status = document.getElementById('status');
+    const remotes = document.getElementById('remotes');
+    const roomInput = document.getElementById('roomInput');
+    const nameInput = document.getElementById('nameInput');
+
+    const RTC_CONFIG = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+    joinBtn.onclick = async () => {
+      joinBtn.disabled = true;
+      const room = (roomInput.value || 'demo-room').trim();
+      const name = (nameInput.value || '').trim();
+      try {
+        localStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation:true, noiseSuppression:true } });
+      } catch (err) {
+        alert('Microphone access is required: ' + err.message);
+        joinBtn.disabled = false;
+        return;
+      }
+
+      // Start muted by default
+      localStream.getAudioTracks().forEach(t => t.enabled = false);
+      micOn = false;
+      muteBtn.textContent = '🎙️ Unmute';
+      muteBtn.disabled = false;
+
+      socket.emit('join', { room, name });
+      joinedRoom = room;
+      status.textContent = `Joined (signaling)...`;
+      leaveBtn.disabled = false;
+    };
+
+    leaveBtn.onclick = () => {
+      if (!joinedRoom) return;
+      socket.emit('leave', { room: joinedRoom });
+      cleanupAllPeers();
+      joinedRoom = null;
+      joinBtn.disabled = false;
+      leaveBtn.disabled = true;
+      muteBtn.disabled = true;
+      status.textContent = 'Left room';
+    };
+
+    muteBtn.onclick = () => {
+      if (!localStream) return;
+      micOn = !micOn;
+      localStream.getAudioTracks().forEach(t => t.enabled = micOn);
+      muteBtn.textContent = micOn ? '🔇 Mute' : '🎙️ Unmute';
+      status.textContent = micOn ? 'Mic: ON' : 'Mic: OFF';
+    };
+
+    // When the server confirms join, it sends "joined" with our sid and list of others
+    socket.on('joined', async (data) => {
+      myId = data.you;
+      const others = data.others || [];
+      status.textContent = `Connected. Peers: ${others.length}`;
+      // create peer connections and initiate offers to each existing peer
+      for (const peerId of others) {
+        await createPeerConnection(peerId, true);
+      }
+    });
+
+    // When someone new joins, server emits new-peer to others
+    socket.on('new-peer', async (data) => {
+      const peerId = data.peer;
+      status.textContent = `New peer: ${peerId}`;
+      // wait a moment then create PC (we will *not* create offer here if we are the one who joined earlier)
+      await createPeerConnection(peerId, false);
+    });
+
+    // Handle incoming signal (offer/answer/candidate)
+    socket.on('signal', async (data) => {
+      // data: { from, to, signal }
+      const from = data.from;
+      const signal = data.signal;
+      if (!pcs[from]) {
+        // create PC as non-initiator
+        await createPeerConnection(from, false);
+      }
+      const pc = pcs[from];
+
+      if (signal.type === 'offer') {
+        await pc.setRemoteDescription(new RTCSessionDescription(signal));
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        socket.emit('signal', { to: from, from: myId, signal: pc.localDescription });
+      } else if (signal.type === 'answer') {
+        await pc.setRemoteDescription(new RTCSessionDescription(signal));
+      } else if (signal.candidate) {
+        try { await pc.addIceCandidate(signal); } catch (e) { console.warn("addIceCandidate err", e); }
+      }
+    });
+
+    socket.on('peer-left', (data) => {
+      const peer = data.peer;
+      removePeer(peer);
+      status.textContent = `Peer left: ${peer}`;
+    });
+
+    // createPC: initiator true -> we create offer and send to peer
+    async function createPeerConnection(peerId, initiator) {
+      if (pcs[peerId]) return pcs[peerId];
+
+      const pc = new RTCPeerConnection(RTC_CONFIG);
+      pcs[peerId] = pc;
+
+      // add local audio track(s)
+      if (localStream) {
+        localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+      }
+
+      pc.onicecandidate = (ev) => {
+        if (ev.candidate) {
+          socket.emit('signal', { to: peerId, from: myId, signal: ev.candidate });
+        }
+      };
+
+      pc.ontrack = (ev) => {
+        // attach remote audio
+        const stream = ev.streams[0];
+        if (!localAudioEls[peerId]) {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.id = 'tile-' + peerId;
+          tile.innerHTML = `<div><strong>Peer: ${peerId.slice(0,6)}</strong></div><audio id="audio-${peerId}" autoplay playsinline></audio>`;
+          remotes.appendChild(tile);
+          const a = document.getElementById('audio-' + peerId);
+          a.srcObject = stream;
+          localAudioEls[peerId] = a;
+        } else {
+          localAudioEls[peerId].srcObject = stream;
+        }
+      };
+
+      pc.onconnectionstatechange = () => {
+        if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected' || pc.connectionState === 'closed') {
+          removePeer(peerId);
+        }
+      };
+
+      if (initiator) {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        socket.emit('signal', { to: peerId, from: myId, signal: pc.localDescription });
+      }
+
+      return pc;
+    }
+
+    function removePeer(peerId) {
+      const pc = pcs[peerId];
+      if (pc) {
+        try { pc.close(); } catch {}
+        delete pcs[peerId];
+      }
+      const el = document.getElementById('tile-' + peerId);
+      if (el) el.remove();
+      delete localAudioEls[peerId];
+    }
+
+    function cleanupAllPeers() {
+      Object.keys(pcs).forEach(p => removePeer(p));
+      if (localStream) {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+      }
+      remotes.innerHTML = '';
+    }
+
+    // Optional: auto-unload cleanup
+    window.addEventListener('beforeunload', () => {
+      if (joinedRoom) socket.emit('leave', { room: joinedRoom });
+      cleanupAllPeers();
+    });
+  </script>
+</body>
+</html>
+
