@@ -1,5 +1,5 @@
 # server.py
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -40,6 +40,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
+    # Admin approval flags
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
+    is_approved = db.Column(db.Boolean, default=False, nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -51,10 +54,22 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+def admin_required(func):
+    from functools import wraps
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            abort(403)
+        return func(*args, **kwargs)
+    return wrapper
+
 @app.route("/")
 def index():
     logger.info(f"Home page accessed - User authenticated: {current_user.is_authenticated}")
     if current_user.is_authenticated:
+        if getattr(current_user, 'is_admin', False):
+            logger.info(f"Admin '{current_user.username}' redirected to admin dashboard")
+            return redirect(url_for('admin_dashboard'))
         logger.info(f"User '{current_user.username}' accessing broadcast page")
         return render_template("broadcast.html")
     logger.info("Redirecting unauthenticated user to login")
@@ -63,7 +78,9 @@ def index():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        logger.info(f"Already authenticated user '{current_user.username}' redirected to home")
+        logger.info(f"Already authenticated user '{current_user.username}' redirected appropriately")
+        if getattr(current_user, 'is_admin', False):
+            return redirect(url_for('admin_dashboard'))
         return redirect(url_for('index'))
     
     if request.method == 'POST':
@@ -74,9 +91,15 @@ def login():
         
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
+            if not user.is_approved:
+                logger.warning(f"Login blocked for unapproved user: {username}")
+                flash('Your account is pending approval by an administrator.', 'error')
+                return render_template("login.html")
             login_user(user)
             logger.info(f"Successful login for user: {username}")
             flash('Logged in successfully!', 'success')
+            if user.is_admin:
+                return redirect(url_for('admin_dashboard'))
             return redirect(url_for('index'))
         else:
             logger.warning(f"Failed login attempt for username: {username}")
@@ -115,13 +138,13 @@ def register():
             flash('Email already registered!', 'error')
             return render_template("register.html")
         
-        user = User(username=username, email=email)
+        user = User(username=username, email=email, is_approved=False)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
         
-        logger.info(f"Successful registration for user: {username}")
-        flash('Registration successful! Please login.', 'success')
+        logger.info(f"Successful registration for user: {username} (awaiting approval)")
+        flash('Registration successful! Please wait for admin approval before logging in.', 'success')
         return redirect(url_for('login'))
     else:
         logger.info("Registration page accessed")
@@ -136,6 +159,44 @@ def logout():
     logger.info(f"User '{username}' logged out")
     flash('Logged out successfully!', 'success')
     return redirect(url_for('login'))
+
+# Admin dashboard and actions
+@app.route('/admin')
+@login_required
+@admin_required
+def admin_dashboard():
+    pending_users = User.query.filter_by(is_approved=False).all()
+    approved_users = User.query.filter_by(is_approved=True).all()
+    return render_template('admin.html', pending_users=pending_users, approved_users=approved_users)
+
+@app.route('/admin/approve/<int:user_id>', methods=['POST'])
+@login_required
+@admin_required
+def approve_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.is_admin:
+        flash('Cannot change approval for admin users.', 'error')
+        return redirect(url_for('admin_dashboard'))
+    user.is_approved = True
+    db.session.commit()
+    logger.info(f"Admin '{current_user.username}' approved user '{user.username}'")
+    flash(f"Approved user '{user.username}'", 'success')
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/admin/reject/<int:user_id>', methods=['POST'])
+@login_required
+@admin_required
+def reject_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if user.is_admin:
+        flash('Cannot reject admin users.', 'error')
+        return redirect(url_for('admin_dashboard'))
+    username = user.username
+    db.session.delete(user)
+    db.session.commit()
+    logger.info(f"Admin '{current_user.username}' rejected (deleted) user '{username}'")
+    flash(f"Rejected and removed user '{username}'", 'success')
+    return redirect(url_for('admin_dashboard'))
 
 # Client tells server: join a room
 @socketio.on("join")
@@ -193,11 +254,48 @@ def on_disconnect():
             logger.info(f"Removed user from room '{room}'. Room now has {len(members)} users")
             emit("peer-left", {"peer": sid}, room=room)
 
+def _ensure_schema_and_seed_admin():
+    # Add columns to existing SQLite table if missing
+    try:
+        from sqlalchemy import inspect, text
+        inspector = inspect(db.engine)
+        columns = [c['name'] for c in inspector.get_columns('user')]
+        with db.engine.begin() as conn:
+            if 'is_admin' not in columns:
+                conn.execute(text("ALTER TABLE user ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT 0"))
+                logger.info("Added column is_admin to user table")
+            if 'is_approved' not in columns:
+                conn.execute(text("ALTER TABLE user ADD COLUMN is_approved BOOLEAN NOT NULL DEFAULT 0"))
+                logger.info("Added column is_approved to user table")
+    except Exception as e:
+        logger.error(f"Schema ensure error: {e}")
+
+    # Seed admin user from env, or default credentials
+    admin_username = os.environ.get('ADMIN_USERNAME', 'admin')
+    admin_email = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
+    admin_password = os.environ.get('ADMIN_PASSWORD', 'admin123')
+
+    admin = User.query.filter((User.username == admin_username) | (User.email == admin_email)).first()
+    if not admin:
+        admin = User(username=admin_username, email=admin_email, is_admin=True, is_approved=True)
+        admin.set_password(admin_password)
+        db.session.add(admin)
+        db.session.commit()
+        logger.warning(f"Seeded default admin user '{admin_username}'. Change the password immediately.")
+    else:
+        # Ensure flags are set on existing admin
+        if not admin.is_admin or not admin.is_approved:
+            admin.is_admin = True
+            admin.is_approved = True
+            db.session.commit()
+            logger.info("Ensured existing admin has admin/approved flags set")
+
 if __name__ == "__main__":
     logger.info("Starting Broadcast App Server...")
     with app.app_context():
         db.create_all()
         logger.info("Database initialized successfully")
+        _ensure_schema_and_seed_admin()
     
     logger.info("Server starting on http://0.0.0.0:5000")
     # Use gevent WSGI server provided by flask-socketio

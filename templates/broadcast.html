@@ -212,6 +212,9 @@
     <h1>🎙️ Broadcast Room</h1>
     <div class="user-info">
       <span>Welcome, <strong>{{ current_user.username }}</strong></span>
+      {% if current_user.is_admin %}
+        <a href="{{ url_for('admin_dashboard') }}" class="logout-btn" style="background:#667eea;">Admin</a>
+      {% endif %}
       <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
     </div>
   </div>

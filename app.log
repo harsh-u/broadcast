@@ -22,3 +22,272 @@
 2025-08-27 23:27:22,148 - INFO - Room 'demo-room' now has 1 users. Others: 0
 2025-08-27 23:27:28,311 - INFO - User (SID: keApFCxvMwxh0_5fAAAF) leaving room: demo-room
 2025-08-27 23:27:28,311 - INFO - Room 'demo-room' now has 0 users
+2025-08-28 15:47:14,843 - INFO - Starting Broadcast App Server...
+2025-08-28 15:47:14,845 - INFO - Database initialized successfully
+2025-08-28 15:47:14,845 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 15:47:23,906 - INFO - Home page accessed - User authenticated: True
+2025-08-28 15:47:23,906 - INFO - User 'harsh' accessing broadcast page
+2025-08-28 15:47:23,923 - INFO - 127.0.0.1 - - [2025-08-28 15:47:23] "GET / HTTP/1.1" 200 12812 0.026481
+2025-08-28 15:47:23,988 - INFO - 127.0.0.1 - - [2025-08-28 15:47:23] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002410
+2025-08-28 15:47:24,054 - INFO - 127.0.0.1 - - [2025-08-28 15:47:24] "GET /socket.io/?EIO=4&transport=polling&t=PZmBfzH HTTP/1.1" 200 254 0.001101
+2025-08-28 15:47:24,096 - INFO - 127.0.0.1 - - [2025-08-28 15:47:24] "POST /socket.io/?EIO=4&transport=polling&t=PZmBfzZ&sid=JDJdzgd9dQPEMer9AAAA HTTP/1.1" 200 195 0.002048
+2025-08-28 15:47:24,100 - INFO - 127.0.0.1 - - [2025-08-28 15:47:24] "GET /socket.io/?EIO=4&transport=polling&t=PZmBfzb&sid=JDJdzgd9dQPEMer9AAAA HTTP/1.1" 200 157 0.000537
+2025-08-28 16:08:41,829 - INFO - Starting Broadcast App Server...
+2025-08-28 16:08:41,832 - INFO - Database initialized successfully
+2025-08-28 16:08:41,839 - INFO - Added column is_admin to user table
+2025-08-28 16:08:41,842 - INFO - Added column is_approved to user table
+2025-08-28 16:08:42,269 - WARNING - Seeded default admin user 'admin'. Change the password immediately.
+2025-08-28 16:08:42,269 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 16:08:44,041 - INFO - User 'harsh' logged out
+2025-08-28 16:08:44,043 - INFO - 127.0.0.1 - - [2025-08-28 16:08:44] "GET /logout HTTP/1.1" 302 506 0.010982
+2025-08-28 16:08:44,054 - INFO - Login page accessed
+2025-08-28 16:08:44,063 - INFO - 127.0.0.1 - - [2025-08-28 16:08:44] "GET /login HTTP/1.1" 200 4448 0.010656
+2025-08-28 16:08:44,184 - INFO - 127.0.0.1 - - [2025-08-28 16:08:44] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001598
+2025-08-28 16:08:48,188 - INFO - Login attempt for username: harsh
+2025-08-28 16:08:48,599 - WARNING - Login blocked for unapproved user: harsh
+2025-08-28 16:08:48,600 - INFO - 127.0.0.1 - - [2025-08-28 16:08:48] "POST /login HTTP/1.1" 200 4475 0.413916
+2025-08-28 16:08:48,665 - INFO - 127.0.0.1 - - [2025-08-28 16:08:48] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001555
+2025-08-28 16:09:03,563 - INFO - 127.0.0.1 - - [2025-08-28 16:09:03] "GET /admin HTTP/1.1" 302 582 0.002955
+2025-08-28 16:09:03,572 - INFO - Login page accessed
+2025-08-28 16:09:03,574 - INFO - 127.0.0.1 - - [2025-08-28 16:09:03] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.003035
+2025-08-28 16:09:03,655 - INFO - 127.0.0.1 - - [2025-08-28 16:09:03] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002005
+2025-08-28 16:09:12,704 - INFO - 127.0.0.1 - - [2025-08-28 16:09:12] "GET /admin HTTP/1.1" 302 582 0.002855
+2025-08-28 16:09:12,714 - INFO - Login page accessed
+2025-08-28 16:09:12,716 - INFO - 127.0.0.1 - - [2025-08-28 16:09:12] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.002703
+2025-08-28 16:09:12,807 - INFO - 127.0.0.1 - - [2025-08-28 16:09:12] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001494
+2025-08-28 16:09:54,784 - INFO - Starting Broadcast App Server...
+2025-08-28 16:09:54,786 - INFO - Database initialized successfully
+2025-08-28 16:09:54,796 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 16:11:17,120 - INFO - Starting Broadcast App Server...
+2025-08-28 16:11:17,122 - INFO - Database initialized successfully
+2025-08-28 16:11:17,132 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 16:11:21,215 - INFO - Login page accessed
+2025-08-28 16:11:21,224 - INFO - 127.0.0.1 - - [2025-08-28 16:11:21] "GET /login?next=%2Fadmin HTTP/1.1" 200 4078 0.010726
+2025-08-28 16:11:21,264 - INFO - 127.0.0.1 - - [2025-08-28 16:11:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001559
+2025-08-28 16:11:26,683 - INFO - Login page accessed
+2025-08-28 16:11:26,684 - INFO - 127.0.0.1 - - [2025-08-28 16:11:26] "GET /login?next=%2Fadmin HTTP/1.1" 200 4078 0.002074
+2025-08-28 16:11:26,772 - INFO - 127.0.0.1 - - [2025-08-28 16:11:26] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002147
+2025-08-28 16:11:30,735 - INFO - Login page accessed
+2025-08-28 16:11:30,736 - INFO - 127.0.0.1 - - [2025-08-28 16:11:30] "GET /login HTTP/1.1" 200 4078 0.002614
+2025-08-28 16:11:30,779 - INFO - 127.0.0.1 - - [2025-08-28 16:11:30] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001433
+2025-08-28 16:11:39,949 - INFO - Login attempt for username: admin
+2025-08-28 16:11:40,396 - WARNING - Failed login attempt for username: admin
+2025-08-28 16:11:40,398 - INFO - 127.0.0.1 - - [2025-08-28 16:11:40] "POST /login HTTP/1.1" 200 4450 0.449901
+2025-08-28 16:11:40,469 - INFO - 127.0.0.1 - - [2025-08-28 16:11:40] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001855
+2025-08-28 16:11:45,904 - INFO - 127.0.0.1 - - [2025-08-28 16:11:45] "GET /admin HTTP/1.1" 302 582 0.002653
+2025-08-28 16:11:45,915 - INFO - Login page accessed
+2025-08-28 16:11:45,916 - INFO - 127.0.0.1 - - [2025-08-28 16:11:45] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.001881
+2025-08-28 16:11:46,002 - INFO - 127.0.0.1 - - [2025-08-28 16:11:46] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002100
+2025-08-28 16:11:58,940 - INFO - Login attempt for username: admin
+2025-08-28 16:11:59,393 - WARNING - Failed login attempt for username: admin
+2025-08-28 16:11:59,395 - INFO - 127.0.0.1 - - [2025-08-28 16:11:59] "POST /login HTTP/1.1" 200 4450 0.457162
+2025-08-28 16:11:59,465 - INFO - 127.0.0.1 - - [2025-08-28 16:11:59] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001891
+2025-08-28 16:12:38,311 - INFO - Login attempt for username: admin
+2025-08-28 16:12:38,738 - WARNING - Failed login attempt for username: admin
+2025-08-28 16:12:38,740 - INFO - 127.0.0.1 - - [2025-08-28 16:12:38] "POST /login HTTP/1.1" 200 4450 0.430333
+2025-08-28 16:12:38,790 - INFO - 127.0.0.1 - - [2025-08-28 16:12:38] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001565
+2025-08-28 16:12:58,931 - INFO - Login attempt for username: admin
+2025-08-28 16:12:59,345 - WARNING - Failed login attempt for username: admin
+2025-08-28 16:12:59,346 - INFO - 127.0.0.1 - - [2025-08-28 16:12:59] "POST /login HTTP/1.1" 200 4450 0.416017
+2025-08-28 16:12:59,426 - INFO - 127.0.0.1 - - [2025-08-28 16:12:59] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002048
+2025-08-28 16:16:09,551 - INFO - Starting Broadcast App Server...
+2025-08-28 16:16:09,553 - INFO - Database initialized successfully
+2025-08-28 16:16:09,563 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 16:16:21,077 - INFO - 127.0.0.1 - - [2025-08-28 16:16:21] "GET /admin HTTP/1.1" 302 582 0.005709
+2025-08-28 16:16:21,084 - INFO - Login page accessed
+2025-08-28 16:16:21,097 - INFO - 127.0.0.1 - - [2025-08-28 16:16:21] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.013800
+2025-08-28 16:16:21,176 - INFO - 127.0.0.1 - - [2025-08-28 16:16:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001354
+2025-08-28 16:16:26,806 - INFO - Login attempt for username: admin
+2025-08-28 16:16:27,294 - INFO - Successful login for user: admin
+2025-08-28 16:16:27,295 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "POST /login HTTP/1.1" 302 651 0.490157
+2025-08-28 16:16:27,311 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:16:27,311 - INFO - User 'admin' accessing broadcast page
+2025-08-28 16:16:27,322 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "GET / HTTP/1.1" 200 13254 0.019300
+2025-08-28 16:16:27,449 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002015
+2025-08-28 16:16:27,563 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "GET /socket.io/?EIO=4&transport=polling&t=PZmIJda HTTP/1.1" 200 254 0.001505
+2025-08-28 16:16:27,644 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "POST /socket.io/?EIO=4&transport=polling&t=PZmIJeh&sid=gEonB1nUQyt8xaRzAAAA HTTP/1.1" 200 195 0.002022
+2025-08-28 16:16:27,645 - INFO - 127.0.0.1 - - [2025-08-28 16:16:27] "GET /socket.io/?EIO=4&transport=polling&t=PZmIJek&sid=gEonB1nUQyt8xaRzAAAA HTTP/1.1" 200 189 0.000576
+2025-08-28 16:16:37,465 - INFO - User 'admin' logged out
+2025-08-28 16:16:37,466 - INFO - 127.0.0.1 - - [2025-08-28 16:16:37] "GET /logout HTTP/1.1" 302 506 0.003587
+2025-08-28 16:16:37,476 - INFO - Login page accessed
+2025-08-28 16:16:37,477 - INFO - 127.0.0.1 - - [2025-08-28 16:16:37] "GET /login HTTP/1.1" 200 4448 0.002043
+2025-08-28 16:16:37,560 - INFO - 127.0.0.1 - - [2025-08-28 16:16:37] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001862
+2025-08-28 16:16:37,580 - INFO - User disconnected (SID: XAAKJLxW0kNEV0YHAAAB)
+2025-08-28 16:16:47,831 - INFO - 127.0.0.1 - - [2025-08-28 16:16:47] "GET /admin HTTP/1.1" 302 582 0.003578
+2025-08-28 16:16:47,842 - INFO - Login page accessed
+2025-08-28 16:16:47,844 - INFO - 127.0.0.1 - - [2025-08-28 16:16:47] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.003161
+2025-08-28 16:16:47,966 - INFO - 127.0.0.1 - - [2025-08-28 16:16:47] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002008
+2025-08-28 16:16:51,175 - INFO - Login attempt for username: admin
+2025-08-28 16:16:51,602 - WARNING - Failed login attempt for username: admin
+2025-08-28 16:16:51,604 - INFO - 127.0.0.1 - - [2025-08-28 16:16:51] "POST /login HTTP/1.1" 200 4450 0.429235
+2025-08-28 16:16:51,679 - INFO - 127.0.0.1 - - [2025-08-28 16:16:51] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002000
+2025-08-28 16:16:58,332 - INFO - Login attempt for username: admin
+2025-08-28 16:16:58,783 - INFO - Successful login for user: admin
+2025-08-28 16:16:58,785 - INFO - 127.0.0.1 - - [2025-08-28 16:16:58] "POST /login HTTP/1.1" 302 651 0.454640
+2025-08-28 16:16:58,796 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:16:58,797 - INFO - User 'admin' accessing broadcast page
+2025-08-28 16:16:58,798 - INFO - 127.0.0.1 - - [2025-08-28 16:16:58] "GET / HTTP/1.1" 200 13254 0.004356
+2025-08-28 16:16:58,910 - INFO - 127.0.0.1 - - [2025-08-28 16:16:58] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001837
+2025-08-28 16:16:58,993 - INFO - 127.0.0.1 - - [2025-08-28 16:16:58] "GET /socket.io/?EIO=4&transport=polling&t=PZmIRHu HTTP/1.1" 200 254 0.000781
+2025-08-28 16:16:59,030 - INFO - 127.0.0.1 - - [2025-08-28 16:16:59] "POST /socket.io/?EIO=4&transport=polling&t=PZmIRJF&sid=JxnPb4N0yTRF2b3YAAAC HTTP/1.1" 200 195 0.001234
+2025-08-28 16:16:59,037 - INFO - 127.0.0.1 - - [2025-08-28 16:16:59] "GET /socket.io/?EIO=4&transport=polling&t=PZmIRJH&sid=JxnPb4N0yTRF2b3YAAAC HTTP/1.1" 200 157 0.000232
+2025-08-28 16:18:32,351 - INFO - Starting Broadcast App Server...
+2025-08-28 16:18:32,353 - INFO - Database initialized successfully
+2025-08-28 16:18:32,363 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-28 16:18:32,942 - INFO - 127.0.0.1 - - [2025-08-28 16:18:32] "GET /socket.io/?EIO=4&transport=polling&t=PZmIoEc HTTP/1.1" 200 254 0.001452
+2025-08-28 16:18:32,959 - INFO - 127.0.0.1 - - [2025-08-28 16:18:32] "POST /socket.io/?EIO=4&transport=polling&t=PZmIoEr&sid=a9I5OrRaihgNQTFZAAAA HTTP/1.1" 200 195 0.002195
+2025-08-28 16:18:32,961 - INFO - 127.0.0.1 - - [2025-08-28 16:18:32] "GET /socket.io/?EIO=4&transport=polling&t=PZmIoEu&sid=a9I5OrRaihgNQTFZAAAA HTTP/1.1" 200 157 0.000355
+2025-08-28 16:18:37,943 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:18:37,944 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:18:37,945 - INFO - 127.0.0.1 - - [2025-08-28 16:18:37] "GET / HTTP/1.1" 302 351 0.007233
+2025-08-28 16:18:37,989 - INFO - 127.0.0.1 - - [2025-08-28 16:18:37] "GET /admin HTTP/1.1" 200 2878 0.036000
+2025-08-28 16:18:38,041 - INFO - User disconnected (SID: XT46imyBNabHcmCpAAAB)
+2025-08-28 16:18:38,088 - INFO - 127.0.0.1 - - [2025-08-28 16:18:38] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001667
+2025-08-28 16:18:56,892 - INFO - Admin 'admin' approved user 'harsh'
+2025-08-28 16:18:56,893 - INFO - 127.0.0.1 - - [2025-08-28 16:18:56] "POST /admin/approve/1 HTTP/1.1" 302 666 0.019440
+2025-08-28 16:18:56,906 - INFO - 127.0.0.1 - - [2025-08-28 16:18:56] "GET /admin HTTP/1.1" 200 2621 0.004913
+2025-08-28 16:18:57,000 - INFO - 127.0.0.1 - - [2025-08-28 16:18:57] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002262
+2025-08-28 16:18:58,688 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:18:58,689 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:18:58,690 - INFO - 127.0.0.1 - - [2025-08-28 16:18:58] "GET / HTTP/1.1" 302 351 0.005088
+2025-08-28 16:18:58,704 - INFO - 127.0.0.1 - - [2025-08-28 16:18:58] "GET /admin HTTP/1.1" 200 2275 0.007017
+2025-08-28 16:18:58,791 - INFO - 127.0.0.1 - - [2025-08-28 16:18:58] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001364
+2025-08-28 16:19:01,042 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:19:01,042 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:19:01,044 - INFO - 127.0.0.1 - - [2025-08-28 16:19:01] "GET / HTTP/1.1" 302 351 0.004655
+2025-08-28 16:19:01,058 - INFO - 127.0.0.1 - - [2025-08-28 16:19:01] "GET /admin HTTP/1.1" 200 2275 0.006625
+2025-08-28 16:19:01,166 - INFO - 127.0.0.1 - - [2025-08-28 16:19:01] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001768
+2025-08-28 16:19:04,633 - INFO - Already authenticated user 'admin' redirected appropriately
+2025-08-28 16:19:04,634 - INFO - 127.0.0.1 - - [2025-08-28 16:19:04] "GET /login?next=%2Fadmin HTTP/1.1" 302 351 0.004815
+2025-08-28 16:19:04,650 - INFO - 127.0.0.1 - - [2025-08-28 16:19:04] "GET /admin HTTP/1.1" 200 2275 0.006475
+2025-08-28 16:19:04,742 - INFO - 127.0.0.1 - - [2025-08-28 16:19:04] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002103
+2025-08-28 16:19:08,562 - INFO - Already authenticated user 'admin' redirected appropriately
+2025-08-28 16:19:08,563 - INFO - 127.0.0.1 - - [2025-08-28 16:19:08] "GET /login?next=%2Fadmin HTTP/1.1" 302 351 0.004985
+2025-08-28 16:19:08,577 - INFO - 127.0.0.1 - - [2025-08-28 16:19:08] "GET /admin HTTP/1.1" 200 2275 0.006567
+2025-08-28 16:19:08,666 - INFO - 127.0.0.1 - - [2025-08-28 16:19:08] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001468
+2025-08-28 16:19:15,282 - INFO - Already authenticated user 'admin' redirected appropriately
+2025-08-28 16:19:15,283 - INFO - 127.0.0.1 - - [2025-08-28 16:19:15] "GET /login HTTP/1.1" 302 351 0.004194
+2025-08-28 16:19:15,295 - INFO - 127.0.0.1 - - [2025-08-28 16:19:15] "GET /admin HTTP/1.1" 200 2275 0.005439
+2025-08-28 16:19:15,411 - INFO - 127.0.0.1 - - [2025-08-28 16:19:15] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002095
+2025-08-28 16:19:20,986 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:19:20,987 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:19:20,988 - INFO - 127.0.0.1 - - [2025-08-28 16:19:20] "GET / HTTP/1.1" 302 351 0.005082
+2025-08-28 16:19:21,005 - INFO - 127.0.0.1 - - [2025-08-28 16:19:21] "GET /admin HTTP/1.1" 200 2275 0.007128
+2025-08-28 16:19:21,091 - INFO - 127.0.0.1 - - [2025-08-28 16:19:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002043
+2025-08-28 16:19:26,769 - INFO - User 'admin' logged out
+2025-08-28 16:19:26,772 - INFO - 127.0.0.1 - - [2025-08-28 16:19:26] "GET /logout HTTP/1.1" 302 506 0.005186
+2025-08-28 16:19:26,786 - INFO - Login page accessed
+2025-08-28 16:19:26,796 - INFO - 127.0.0.1 - - [2025-08-28 16:19:26] "GET /login HTTP/1.1" 200 4448 0.011192
+2025-08-28 16:19:26,923 - INFO - 127.0.0.1 - - [2025-08-28 16:19:26] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001841
+2025-08-28 16:19:31,842 - INFO - Login attempt for username: harsh
+2025-08-28 16:19:32,266 - INFO - Successful login for user: harsh
+2025-08-28 16:19:32,267 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "POST /login HTTP/1.1" 302 651 0.425829
+2025-08-28 16:19:32,279 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:19:32,279 - INFO - User 'harsh' accessing broadcast page
+2025-08-28 16:19:32,298 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "GET / HTTP/1.1" 200 13261 0.021729
+2025-08-28 16:19:32,391 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002007
+2025-08-28 16:19:32,455 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "GET /socket.io/?EIO=4&transport=polling&t=PZmJ0mV HTTP/1.1" 200 254 0.001045
+2025-08-28 16:19:32,518 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "POST /socket.io/?EIO=4&transport=polling&t=PZmJ0nV&sid=gM3nKhwqPQVsQZX5AAAC HTTP/1.1" 200 195 0.001440
+2025-08-28 16:19:32,525 - INFO - 127.0.0.1 - - [2025-08-28 16:19:32] "GET /socket.io/?EIO=4&transport=polling&t=PZmJ0nY&sid=gM3nKhwqPQVsQZX5AAAC HTTP/1.1" 200 189 0.000505
+2025-08-28 16:19:34,360 - INFO - User 'harsh' logged out
+2025-08-28 16:19:34,362 - INFO - 127.0.0.1 - - [2025-08-28 16:19:34] "GET /logout HTTP/1.1" 302 506 0.005117
+2025-08-28 16:19:34,387 - INFO - Login page accessed
+2025-08-28 16:19:34,389 - INFO - 127.0.0.1 - - [2025-08-28 16:19:34] "GET /login HTTP/1.1" 200 4448 0.003161
+2025-08-28 16:19:34,494 - INFO - 127.0.0.1 - - [2025-08-28 16:19:34] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002274
+2025-08-28 16:19:34,535 - INFO - User disconnected (SID: IOhk4K_BH5hupnd5AAAD)
+2025-08-28 16:19:44,560 - INFO - Login attempt for username: harsh1
+2025-08-28 16:19:44,562 - WARNING - Failed login attempt for username: harsh1
+2025-08-28 16:19:44,565 - INFO - 127.0.0.1 - - [2025-08-28 16:19:44] "POST /login HTTP/1.1" 200 4450 0.005880
+2025-08-28 16:19:44,616 - INFO - 127.0.0.1 - - [2025-08-28 16:19:44] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002203
+2025-08-28 16:19:46,988 - INFO - Registration page accessed
+2025-08-28 16:19:46,999 - INFO - 127.0.0.1 - - [2025-08-28 16:19:46] "GET /register HTTP/1.1" 200 6604 0.011818
+2025-08-28 16:19:47,082 - INFO - 127.0.0.1 - - [2025-08-28 16:19:47] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001615
+2025-08-28 16:20:05,043 - INFO - Registration attempt for username: harsh1, email: harsh1@gmail.com
+2025-08-28 16:20:05,479 - INFO - Successful registration for user: harsh1 (awaiting approval)
+2025-08-28 16:20:05,481 - INFO - 127.0.0.1 - - [2025-08-28 16:20:05] "POST /register HTTP/1.1" 302 579 0.439099
+2025-08-28 16:20:05,490 - INFO - Login page accessed
+2025-08-28 16:20:05,492 - INFO - 127.0.0.1 - - [2025-08-28 16:20:05] "GET /login HTTP/1.1" 200 4498 0.003244
+2025-08-28 16:20:05,590 - INFO - 127.0.0.1 - - [2025-08-28 16:20:05] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002099
+2025-08-28 16:20:15,854 - INFO - Login attempt for username: harsh1
+2025-08-28 16:20:16,289 - WARNING - Login blocked for unapproved user: harsh1
+2025-08-28 16:20:16,291 - INFO - 127.0.0.1 - - [2025-08-28 16:20:16] "POST /login HTTP/1.1" 200 4475 0.437884
+2025-08-28 16:20:16,345 - INFO - 127.0.0.1 - - [2025-08-28 16:20:16] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002193
+2025-08-28 16:20:26,415 - INFO - 127.0.0.1 - - [2025-08-28 16:20:26] "GET /admin HTTP/1.1" 302 582 0.002323
+2025-08-28 16:20:26,428 - INFO - Login page accessed
+2025-08-28 16:20:26,429 - INFO - 127.0.0.1 - - [2025-08-28 16:20:26] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.002014
+2025-08-28 16:20:26,524 - INFO - 127.0.0.1 - - [2025-08-28 16:20:26] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001847
+2025-08-28 16:20:29,474 - INFO - Login attempt for username: admin
+2025-08-28 16:20:29,906 - INFO - Successful login for user: admin
+2025-08-28 16:20:29,908 - INFO - 127.0.0.1 - - [2025-08-28 16:20:29] "POST /login HTTP/1.1" 302 666 0.435462
+2025-08-28 16:20:29,923 - INFO - 127.0.0.1 - - [2025-08-28 16:20:29] "GET /admin HTTP/1.1" 200 3334 0.008326
+2025-08-28 16:20:30,073 - INFO - 127.0.0.1 - - [2025-08-28 16:20:30] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001905
+2025-08-28 16:20:35,823 - INFO - Admin 'admin' rejected (deleted) user 'harsh1'
+2025-08-28 16:20:35,825 - INFO - 127.0.0.1 - - [2025-08-28 16:20:35] "POST /admin/reject/3 HTTP/1.1" 302 677 0.033288
+2025-08-28 16:20:35,839 - INFO - 127.0.0.1 - - [2025-08-28 16:20:35] "GET /admin HTTP/1.1" 200 2634 0.007248
+2025-08-28 16:20:35,922 - INFO - 127.0.0.1 - - [2025-08-28 16:20:35] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002256
+2025-08-28 16:20:37,904 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:20:37,904 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:20:37,905 - INFO - 127.0.0.1 - - [2025-08-28 16:20:37] "GET / HTTP/1.1" 302 351 0.003172
+2025-08-28 16:20:37,921 - INFO - 127.0.0.1 - - [2025-08-28 16:20:37] "GET /admin HTTP/1.1" 200 2275 0.008216
+2025-08-28 16:20:38,016 - INFO - 127.0.0.1 - - [2025-08-28 16:20:38] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002034
+2025-08-28 16:20:38,880 - INFO - User 'admin' logged out
+2025-08-28 16:20:38,882 - INFO - 127.0.0.1 - - [2025-08-28 16:20:38] "GET /logout HTTP/1.1" 302 506 0.005290
+2025-08-28 16:20:38,891 - INFO - Login page accessed
+2025-08-28 16:20:38,893 - INFO - 127.0.0.1 - - [2025-08-28 16:20:38] "GET /login HTTP/1.1" 200 4448 0.002543
+2025-08-28 16:20:39,016 - INFO - 127.0.0.1 - - [2025-08-28 16:20:39] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002002
+2025-08-28 16:20:44,699 - INFO - Login attempt for username: harsh1
+2025-08-28 16:20:44,701 - WARNING - Failed login attempt for username: harsh1
+2025-08-28 16:20:44,703 - INFO - 127.0.0.1 - - [2025-08-28 16:20:44] "POST /login HTTP/1.1" 200 4450 0.005830
+2025-08-28 16:20:44,794 - INFO - 127.0.0.1 - - [2025-08-28 16:20:44] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001968
+2025-08-28 16:20:52,178 - INFO - Login attempt for username: harsh1
+2025-08-28 16:20:52,181 - WARNING - Failed login attempt for username: harsh1
+2025-08-28 16:20:52,183 - INFO - 127.0.0.1 - - [2025-08-28 16:20:52] "POST /login HTTP/1.1" 200 4450 0.006696
+2025-08-28 16:20:52,240 - INFO - 127.0.0.1 - - [2025-08-28 16:20:52] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002163
+2025-08-28 16:20:55,362 - INFO - Registration page accessed
+2025-08-28 16:20:55,363 - INFO - 127.0.0.1 - - [2025-08-28 16:20:55] "GET /register HTTP/1.1" 200 6604 0.001828
+2025-08-28 16:20:55,431 - INFO - 127.0.0.1 - - [2025-08-28 16:20:55] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001138
+2025-08-28 16:21:15,451 - INFO - Registration attempt for username: harsh1, email: harsh1@gmail.com
+2025-08-28 16:21:15,984 - INFO - Successful registration for user: harsh1 (awaiting approval)
+2025-08-28 16:21:15,986 - INFO - 127.0.0.1 - - [2025-08-28 16:21:15] "POST /register HTTP/1.1" 302 579 0.536312
+2025-08-28 16:21:15,995 - INFO - Login page accessed
+2025-08-28 16:21:15,996 - INFO - 127.0.0.1 - - [2025-08-28 16:21:15] "GET /login HTTP/1.1" 200 4498 0.002501
+2025-08-28 16:21:16,109 - INFO - 127.0.0.1 - - [2025-08-28 16:21:16] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002214
+2025-08-28 16:21:32,896 - INFO - 127.0.0.1 - - [2025-08-28 16:21:32] "GET /admin HTTP/1.1" 302 582 0.002404
+2025-08-28 16:21:32,906 - INFO - Login page accessed
+2025-08-28 16:21:32,908 - INFO - 127.0.0.1 - - [2025-08-28 16:21:32] "GET /login?next=%2Fadmin HTTP/1.1" 200 4458 0.003704
+2025-08-28 16:21:33,018 - INFO - 127.0.0.1 - - [2025-08-28 16:21:33] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002051
+2025-08-28 16:21:36,119 - INFO - Login attempt for username: admin
+2025-08-28 16:21:36,563 - INFO - Successful login for user: admin
+2025-08-28 16:21:36,564 - INFO - 127.0.0.1 - - [2025-08-28 16:21:36] "POST /login HTTP/1.1" 302 666 0.446251
+2025-08-28 16:21:36,580 - INFO - 127.0.0.1 - - [2025-08-28 16:21:36] "GET /admin HTTP/1.1" 200 3334 0.007066
+2025-08-28 16:21:36,692 - INFO - 127.0.0.1 - - [2025-08-28 16:21:36] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001209
+2025-08-28 16:21:38,560 - INFO - Admin 'admin' approved user 'harsh1'
+2025-08-28 16:21:38,563 - INFO - 127.0.0.1 - - [2025-08-28 16:21:38] "POST /admin/approve/3 HTTP/1.1" 302 667 0.016506
+2025-08-28 16:21:38,578 - INFO - 127.0.0.1 - - [2025-08-28 16:21:38] "GET /admin HTTP/1.1" 200 2738 0.008308
+2025-08-28 16:21:38,689 - INFO - 127.0.0.1 - - [2025-08-28 16:21:38] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001158
+2025-08-28 16:21:42,750 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:21:42,750 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:21:42,751 - INFO - 127.0.0.1 - - [2025-08-28 16:21:42] "GET / HTTP/1.1" 302 351 0.003227
+2025-08-28 16:21:42,768 - INFO - 127.0.0.1 - - [2025-08-28 16:21:42] "GET /admin HTTP/1.1" 200 2391 0.008042
+2025-08-28 16:21:42,887 - INFO - 127.0.0.1 - - [2025-08-28 16:21:42] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002004
+2025-08-28 16:21:47,248 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:21:47,248 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-28 16:21:47,249 - INFO - 127.0.0.1 - - [2025-08-28 16:21:47] "GET / HTTP/1.1" 302 351 0.004992
+2025-08-28 16:21:47,264 - INFO - 127.0.0.1 - - [2025-08-28 16:21:47] "GET /admin HTTP/1.1" 200 2391 0.006350
+2025-08-28 16:21:47,371 - INFO - 127.0.0.1 - - [2025-08-28 16:21:47] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001374
+2025-08-28 16:21:49,571 - INFO - User 'admin' logged out
+2025-08-28 16:21:49,573 - INFO - 127.0.0.1 - - [2025-08-28 16:21:49] "GET /logout HTTP/1.1" 302 506 0.003678
+2025-08-28 16:21:49,600 - INFO - Login page accessed
+2025-08-28 16:21:49,602 - INFO - 127.0.0.1 - - [2025-08-28 16:21:49] "GET /login HTTP/1.1" 200 4448 0.003086
+2025-08-28 16:21:49,695 - INFO - 127.0.0.1 - - [2025-08-28 16:21:49] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001152
+2025-08-28 16:22:03,449 - INFO - Login attempt for username: harsh1
+2025-08-28 16:22:03,936 - INFO - Successful login for user: harsh1
+2025-08-28 16:22:03,937 - INFO - 127.0.0.1 - - [2025-08-28 16:22:03] "POST /login HTTP/1.1" 302 651 0.489188
+2025-08-28 16:22:03,948 - INFO - Home page accessed - User authenticated: True
+2025-08-28 16:22:03,948 - INFO - User 'harsh1' accessing broadcast page
+2025-08-28 16:22:03,950 - INFO - 127.0.0.1 - - [2025-08-28 16:22:03] "GET / HTTP/1.1" 200 13266 0.005240
+2025-08-28 16:22:04,056 - INFO - 127.0.0.1 - - [2025-08-28 16:22:04] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.002083
+2025-08-28 16:22:04,135 - INFO - 127.0.0.1 - - [2025-08-28 16:22:04] "GET /socket.io/?EIO=4&transport=polling&t=PZmJboW HTTP/1.1" 200 254 0.000902
+2025-08-28 16:22:04,208 - INFO - 127.0.0.1 - - [2025-08-28 16:22:04] "POST /socket.io/?EIO=4&transport=polling&t=PZmJbpg&sid=kVI1wK1qwW9O4c6BAAAE HTTP/1.1" 200 195 0.000976
+2025-08-28 16:22:04,216 - INFO - 127.0.0.1 - - [2025-08-28 16:22:04] "GET /socket.io/?EIO=4&transport=polling&t=PZmJbpi&sid=kVI1wK1qwW9O4c6BAAAE HTTP/1.1" 200 157 0.000436
+2025-08-28 16:22:04,229 - INFO - 127.0.0.1 - - [2025-08-28 16:22:04] "GET /socket.io/?EIO=4&transport=polling&t=PZmJbq0&sid=kVI1wK1qwW9O4c6BAAAE HTTP/1.1" 200 157 0.000499
