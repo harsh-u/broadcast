@@ -1,0 +1,470 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Broadcast Room - {{ current_user.username }}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .header {
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      color: #333;
+      font-size: 1.8rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info span {
+      color: #666;
+      font-weight: 500;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    .main-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .controls { 
+      display: flex; 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      margin-bottom: 20px; 
+      align-items: center;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    input, button { 
+      padding: 10px 15px; 
+      border-radius: 8px; 
+      border: 2px solid #e1e5e9;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mute-btn {
+      background: #28a745;
+    }
+
+    .mute-btn.muted {
+      background: #dc3545;
+    }
+
+    #status {
+      padding: 8px 12px;
+      background: #e9ecef;
+      border-radius: 6px;
+      font-weight: 500;
+      color: #495057;
+    }
+
+    #remotes { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: 15px; 
+      margin-top: 20px; 
+    }
+
+    .tile { 
+      border: 2px solid #e1e5e9; 
+      padding: 15px; 
+      border-radius: 10px;
+      background: #f8f9fa;
+      transition: border-color 0.3s ease;
+    }
+
+    .tile:hover {
+      border-color: #667eea;
+    }
+
+    .tile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .tile-title {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .connection-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #28a745;
+    }
+
+    .connection-status.disconnected {
+      background: #dc3545;
+    }
+
+    audio { 
+      width: 100%; 
+      border-radius: 6px;
+    }
+
+    .no-peers {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      padding: 2rem;
+    }
+
+    .flash-messages {
+      margin-bottom: 1rem;
+    }
+
+    .flash-message {
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .flash-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎙️ Broadcast Room</h1>
+    <div class="user-info">
+      <span>Welcome, <strong>{{ current_user.username }}</strong></span>
+      <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+  </div>
+
+  <div class="main-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="controls">
+      <input id="roomInput" placeholder="Room name" value="demo-room" />
+      <input id="nameInput" placeholder="Your display name" value="{{ current_user.username }}" />
+      <button id="joinBtn">Join Room</button>
+      <button id="leaveBtn" disabled>Leave</button>
+      <button id="muteBtn" disabled class="mute-btn">🎙️ Unmute</button>
+      <span id="status">Not joined</span>
+    </div>
+
+    <div id="remotes">
+      <div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io(); // connects to same host
+    const pcs = {};      // peerId -> RTCPeerConnection
+    const localAudioEls = {}; // peerId -> audio element for remote audio
+    let localStream = null;
+    let joinedRoom = null;
+    let myId = null;
+    let micOn = false;
+
+    const joinBtn = document.getElementById('joinBtn');
+    const leaveBtn = document.getElementById('leaveBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const status = document.getElementById('status');
+    const remotes = document.getElementById('remotes');
+    const roomInput = document.getElementById('roomInput');
+    const nameInput = document.getElementById('nameInput');
+
+    const RTC_CONFIG = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+    joinBtn.onclick = async () => {
+      joinBtn.disabled = true;
+      const room = (roomInput.value || 'demo-room').trim();
+      const name = (nameInput.value || '{{ current_user.username }}').trim();
+      
+      try {
+        localStream = await navigator.mediaDevices.getUserMedia({ 
+          audio: { 
+            echoCancellation: true, 
+            noiseSuppression: true,
+            autoGainControl: true
+          } 
+        });
+      } catch (err) {
+        alert('Microphone access is required: ' + err.message);
+        joinBtn.disabled = false;
+        return;
+      }
+
+      // Start muted by default
+      localStream.getAudioTracks().forEach(t => t.enabled = false);
+      micOn = false;
+      muteBtn.textContent = '🎙️ Unmute';
+      muteBtn.disabled = false;
+
+      socket.emit('join', { room, name });
+      joinedRoom = room;
+      status.textContent = `Joined (signaling)...`;
+      leaveBtn.disabled = false;
+    };
+
+    leaveBtn.onclick = () => {
+      if (!joinedRoom) return;
+      socket.emit('leave', { room: joinedRoom });
+      cleanupAllPeers();
+      joinedRoom = null;
+      joinBtn.disabled = false;
+      leaveBtn.disabled = true;
+      muteBtn.disabled = true;
+      status.textContent = 'Left room';
+      remotes.innerHTML = '<div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>';
+    };
+
+    muteBtn.onclick = () => {
+      if (!localStream) return;
+      micOn = !micOn;
+      localStream.getAudioTracks().forEach(t => t.enabled = micOn);
+      muteBtn.textContent = micOn ? '🔇 Mute' : '🎙️ Unmute';
+      muteBtn.classList.toggle('muted', micOn);
+      status.textContent = micOn ? 'Mic: ON' : 'Mic: OFF';
+    };
+
+    // When the server confirms join, it sends "joined" with our sid and list of others
+    socket.on('joined', async (data) => {
+      myId = data.you;
+      const others = data.others || [];
+      status.textContent = `Connected. Peers: ${others.length}`;
+      // create peer connections and initiate offers to each existing peer
+      for (const peerId of others) {
+        await createPeerConnection(peerId, true);
+      }
+    });
+
+    // When someone new joins, server emits new-peer to others
+    socket.on('new-peer', async (data) => {
+      const peerId = data.peer;
+      const peerName = data.name || peerId.slice(0, 6);
+      status.textContent = `New peer: ${peerName}`;
+      // wait a moment then create PC (we will *not* create offer here if we are the one who joined earlier)
+      await createPeerConnection(peerId, false);
+    });
+
+    // Handle incoming signal (offer/answer/candidate)
+    socket.on('signal', async (data) => {
+      // data: { from, to, signal }
+      const from = data.from;
+      const signal = data.signal;
+      if (!pcs[from]) {
+        // create PC as non-initiator
+        await createPeerConnection(from, false);
+      }
+      const pc = pcs[from];
+
+      if (signal.type === 'offer') {
+        await pc.setRemoteDescription(new RTCSessionDescription(signal));
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+        socket.emit('signal', { to: from, from: myId, signal: pc.localDescription });
+      } else if (signal.type === 'answer') {
+        await pc.setRemoteDescription(new RTCSessionDescription(signal));
+      } else if (signal.candidate) {
+        try { await pc.addIceCandidate(signal); } catch (e) { console.warn("addIceCandidate err", e); }
+      }
+    });
+
+    socket.on('peer-left', (data) => {
+      const peer = data.peer;
+      removePeer(peer);
+      status.textContent = `Peer left: ${peer}`;
+    });
+
+    // createPC: initiator true -> we create offer and send to peer
+    async function createPeerConnection(peerId, initiator) {
+      if (pcs[peerId]) return pcs[peerId];
+
+      const pc = new RTCPeerConnection(RTC_CONFIG);
+      pcs[peerId] = pc;
+
+      // add local audio track(s)
+      if (localStream) {
+        localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+      }
+
+      pc.onicecandidate = (ev) => {
+        if (ev.candidate) {
+          socket.emit('signal', { to: peerId, from: myId, signal: ev.candidate });
+        }
+      };
+
+      pc.ontrack = (ev) => {
+        // attach remote audio
+        const stream = ev.streams[0];
+        if (!localAudioEls[peerId]) {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.id = 'tile-' + peerId;
+          
+          const peerName = peerId.slice(0, 6);
+          tile.innerHTML = `
+            <div class="tile-header">
+              <div class="tile-title">${peerName}</div>
+              <div class="connection-status" id="status-${peerId}"></div>
+            </div>
+            <audio id="audio-${peerId}" autoplay playsinline></audio>
+          `;
+          
+          // Remove the "no peers" message if it exists
+          const noPeers = remotes.querySelector('.no-peers');
+          if (noPeers) {
+            noPeers.remove();
+          }
+          
+          remotes.appendChild(tile);
+          const a = document.getElementById('audio-' + peerId);
+          a.srcObject = stream;
+          localAudioEls[peerId] = a;
+        } else {
+          localAudioEls[peerId].srcObject = stream;
+        }
+      };
+
+      pc.onconnectionstatechange = () => {
+        const statusEl = document.getElementById('status-' + peerId);
+        if (statusEl) {
+          if (pc.connectionState === 'connected') {
+            statusEl.classList.remove('disconnected');
+          } else if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected' || pc.connectionState === 'closed') {
+            statusEl.classList.add('disconnected');
+            removePeer(peerId);
+          }
+        }
+      };
+
+      if (initiator) {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        socket.emit('signal', { to: peerId, from: myId, signal: pc.localDescription });
+      }
+
+      return pc;
+    }
+
+    function removePeer(peerId) {
+      const pc = pcs[peerId];
+      if (pc) {
+        try { pc.close(); } catch {}
+        delete pcs[peerId];
+      }
+      const el = document.getElementById('tile-' + peerId);
+      if (el) el.remove();
+      delete localAudioEls[peerId];
+      
+      // Show "no peers" message if no peers are connected
+      if (Object.keys(pcs).length === 0) {
+        remotes.innerHTML = '<div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>';
+      }
+    }
+
+    function cleanupAllPeers() {
+      Object.keys(pcs).forEach(p => removePeer(p));
+      if (localStream) {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+      }
+      remotes.innerHTML = '<div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>';
+    }
+
+    // Optional: auto-unload cleanup
+    window.addEventListener('beforeunload', () => {
+      if (joinedRoom) socket.emit('leave', { room: joinedRoom });
+      cleanupAllPeers();
+    });
+  </script>
+</body>
+</html>

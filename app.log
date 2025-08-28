@@ -1,0 +1,24 @@
+2025-08-27 23:26:57,666 - INFO - Starting Broadcast App Server...
+2025-08-27 23:26:57,669 - INFO - Database initialized successfully
+2025-08-27 23:26:57,669 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-27 23:26:59,318 - INFO - 127.0.0.1 - - [2025-08-27 23:26:59] "GET /socket.io/?EIO=4&transport=polling&t=PZihGSk HTTP/1.1" 200 254 0.001350
+2025-08-27 23:26:59,330 - INFO - 127.0.0.1 - - [2025-08-27 23:26:59] "POST /socket.io/?EIO=4&transport=polling&t=PZihGSy&sid=T4VvG-c9LIPrBroeAAAA HTTP/1.1" 200 195 0.001993
+2025-08-27 23:26:59,334 - INFO - 127.0.0.1 - - [2025-08-27 23:26:59] "GET /socket.io/?EIO=4&transport=polling&t=PZihGSz&sid=T4VvG-c9LIPrBroeAAAA HTTP/1.1" 200 157 0.000506
+2025-08-27 23:27:07,636 - INFO - Home page accessed - User authenticated: True
+2025-08-27 23:27:07,636 - INFO - User 'harsh' accessing broadcast page
+2025-08-27 23:27:07,649 - INFO - 127.0.0.1 - - [2025-08-27 23:27:07] "GET / HTTP/1.1" 200 12812 0.023679
+2025-08-27 23:27:07,661 - INFO - User disconnected (SID: 7uddpU1mhSoQPUj9AAAB)
+2025-08-27 23:27:07,724 - INFO - 127.0.0.1 - - [2025-08-27 23:27:07] "GET /socket.io/?EIO=4&transport=polling&t=PZihIVv HTTP/1.1" 200 254 0.000830
+2025-08-27 23:27:07,743 - INFO - 127.0.0.1 - - [2025-08-27 23:27:07] "POST /socket.io/?EIO=4&transport=polling&t=PZihIWP&sid=JAdP9gY7bdvhKCR5AAAC HTTP/1.1" 200 195 0.000754
+2025-08-27 23:27:07,745 - INFO - 127.0.0.1 - - [2025-08-27 23:27:07] "GET /socket.io/?EIO=4&transport=polling&t=PZihIWQ&sid=JAdP9gY7bdvhKCR5AAAC HTTP/1.1" 200 157 0.000203
+2025-08-27 23:27:11,621 - INFO - Home page accessed - User authenticated: True
+2025-08-27 23:27:11,621 - INFO - User 'harsh' accessing broadcast page
+2025-08-27 23:27:11,623 - INFO - 127.0.0.1 - - [2025-08-27 23:27:11] "GET / HTTP/1.1" 200 12812 0.004808
+2025-08-27 23:27:11,638 - INFO - User disconnected (SID: ctihKMyPqZ0Ig8aHAAAD)
+2025-08-27 23:27:11,679 - INFO - 127.0.0.1 - - [2025-08-27 23:27:11] "GET /socket.io/?EIO=4&transport=polling&t=PZihJTi HTTP/1.1" 200 254 0.000847
+2025-08-27 23:27:11,708 - INFO - 127.0.0.1 - - [2025-08-27 23:27:11] "POST /socket.io/?EIO=4&transport=polling&t=PZihJUB&sid=GXxkGG0nKamQ55IhAAAE HTTP/1.1" 200 195 0.000676
+2025-08-27 23:27:11,709 - INFO - 127.0.0.1 - - [2025-08-27 23:27:11] "GET /socket.io/?EIO=4&transport=polling&t=PZihJUD&sid=GXxkGG0nKamQ55IhAAAE HTTP/1.1" 200 157 0.000201
+2025-08-27 23:27:22,148 - INFO - User 'harsh' (SID: keApFCxvMwxh0_5fAAAF) joining room: demo-room
+2025-08-27 23:27:22,148 - INFO - Room 'demo-room' now has 1 users. Others: 0
+2025-08-27 23:27:28,311 - INFO - User (SID: keApFCxvMwxh0_5fAAAF) leaving room: demo-room
+2025-08-27 23:27:28,311 - INFO - Room 'demo-room' now has 0 users
