@@ -6,6 +6,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import logging
+from collections import defaultdict
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "secret!")
@@ -33,6 +34,8 @@ login_manager.login_view = 'login'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="gevent")
 
 ROOMS = {}  # room_name -> set(socket_id)
+CHAT_HISTORY = defaultdict(list)  # room_name -> [{user, message}]
+MAX_CHAT_HISTORY = 100
 
 # User model
 class User(UserMixin, db.Model):
@@ -242,6 +245,21 @@ def on_signal(data):
         return
     emit("signal", data, room=target)
 
+@socketio.on("chat")
+@login_required
+def on_chat(data):
+    room = data.get("room")
+    message = (data.get("message") or "").strip()
+    if not room or not message:
+        return
+    logger.info(f"Chat in '{room}' from '{current_user.username}': {message}")
+    # Append to history
+    CHAT_HISTORY[room].append({"user": current_user.username, "message": message})
+    if len(CHAT_HISTORY[room]) > MAX_CHAT_HISTORY:
+        del CHAT_HISTORY[room][:-MAX_CHAT_HISTORY]
+    # Broadcast to others only
+    emit("chat", {"user": current_user.username, "message": message}, room=room, include_self=False)
+
 @socketio.on("disconnect")
 def on_disconnect():
     sid = request.sid
@@ -253,6 +271,26 @@ def on_disconnect():
             members.remove(sid)
             logger.info(f"Removed user from room '{room}'. Room now has {len(members)} users")
             emit("peer-left", {"peer": sid}, room=room)
+
+@socketio.on("join_chat")
+@login_required
+def on_join_chat(data):
+    room = data.get("room", "default-room")
+    name = data.get("name", current_user.username)
+    sid = request.sid
+    join_room(room)
+    logger.info(f"[CHAT] User '{current_user.username}' (SID: {sid}) joined chat room: {room}")
+    # Send recent history to the joining client only
+    emit("chat_history", {"messages": CHAT_HISTORY[room][-MAX_CHAT_HISTORY:]})
+    # No server join announcement
+
+@socketio.on("leave_chat")
+@login_required
+def on_leave_chat(data):
+    room = data.get("room", "default-room")
+    sid = request.sid
+    leave_room(room)
+    logger.info(f"[CHAT] User (SID: {sid}) left chat room: {room}")
 
 def _ensure_schema_and_seed_admin():
     # Add columns to existing SQLite table if missing

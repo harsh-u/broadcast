@@ -205,11 +205,83 @@
       color: #721c24;
       border: 1px solid #f5c6cb;
     }
+
+    /* Chat panel styling */
+    .chat-container {
+      margin-top: 24px;
+      background: #ffffff;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .chat-header {
+      background: #f8f9fa;
+      padding: 12px 16px;
+      border-bottom: 2px solid #e1e5e9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-title { font-weight: 600; color: #333; }
+    .chat-body {
+      height: 260px;
+      padding: 12px;
+      overflow-y: auto;
+      background: #fcfcfd;
+    }
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      border-top: 2px solid #e1e5e9;
+      background: #fff;
+    }
+    .chat-input input { flex: 1; }
+    .msg { 
+      margin-bottom: 12px; 
+      display: flex;
+      flex-direction: column;
+    }
+    .msg-own {
+      align-items: flex-end;
+    }
+    .msg-other {
+      align-items: flex-start;
+    }
+    .msg-bubble {
+      max-width: 70%;
+      padding: 8px 12px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      position: relative;
+    }
+    .msg-own .msg-bubble {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .msg-other .msg-bubble {
+      background: #e9ecef;
+      color: #333;
+      border-bottom-left-radius: 4px;
+    }
+    .msg-info {
+      font-size: 0.75rem;
+      color: #666;
+      margin: 2px 4px 0;
+    }
+    .msg-own .msg-info {
+      text-align: right;
+    }
+    .msg-other .msg-info {
+      text-align: left;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🎙️ Broadcast Room</h1>
+    <h1>Vibestream 🎶💬</h1>
     <div class="user-info">
       <span>Welcome, <strong>{{ current_user.username }}</strong></span>
       {% if current_user.is_admin %}
@@ -233,8 +305,8 @@
     {% endwith %}
 
     <div class="controls">
-      <input id="roomInput" placeholder="Room name" value="demo-room" />
-      <input id="nameInput" placeholder="Your display name" value="{{ current_user.username }}" />
+      <input id="roomInput" placeholder="Room name" value="DEV-DANK" disabled />
+      <input id="nameInput" placeholder="Your display name" value="{{ current_user.username }}" disabled />
       <button id="joinBtn">Join Room</button>
       <button id="leaveBtn" disabled>Leave</button>
       <button id="muteBtn" disabled class="mute-btn">🎙️ Unmute</button>
@@ -244,6 +316,18 @@
     <div id="remotes">
       <div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>
     </div>
+
+    <div id="chat" class="chat-container">
+      <div class="chat-header">
+        <div class="chat-title">Room Chat</div>
+        <div id="chatStatus" class="muted">Disconnected</div>
+      </div>
+      <div id="chatLog" class="chat-body"></div>
+      <div class="chat-input">
+        <input id="chatInput" placeholder="Type a message" />
+        <button id="sendBtn" disabled>Send</button>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
@@ -252,7 +336,8 @@
     const pcs = {};      // peerId -> RTCPeerConnection
     const localAudioEls = {}; // peerId -> audio element for remote audio
     let localStream = null;
-    let joinedRoom = null;
+    let joinedRoom = null; // WebRTC room (audio)
+    let chatRoom = null;   // Chat room
     let myId = null;
     let micOn = false;
 
@@ -264,28 +349,104 @@
     const roomInput = document.getElementById('roomInput');
     const nameInput = document.getElementById('nameInput');
 
+    const chatLog = document.getElementById('chatLog');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatStatus = document.getElementById('chatStatus');
+    const currentUsername = '{{ current_user.username }}';
+
     const RTC_CONFIG = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
+    // Capture my socket id
+    socket.on('connect', () => {
+      myId = socket.id;
+    });
+
+    // Join chat immediately when page loads to enable text chat
+    window.addEventListener('load', () => {
+      chatRoom = (roomInput.value || 'DEV-DANK').trim();
+      const name = (nameInput.value || '{{ current_user.username }}').trim();
+      socket.emit('join_chat', { room: chatRoom, name });
+      chatStatus.textContent = `Chat: ${chatRoom}`;
+      sendBtn.disabled = false; // enable chat regardless of broadcast join
+    });
+
+    socket.on('chat_history', (data) => {
+      // data: { messages: [{ user, message }] }
+      chatLog.innerHTML = '';
+      (data.messages || []).forEach(m => {
+        const label = (m.user === currentUsername) ? 'Me' : m.user;
+        appendChat(label, m.message);
+      });
+    });
+
+    // If room name is changed, rejoin chat room accordingly
+    roomInput.addEventListener('change', () => {
+      const newRoom = (roomInput.value || 'DEV-DANK').trim();
+      if (newRoom === chatRoom) return;
+      if (chatRoom) socket.emit('leave_chat', { room: chatRoom });
+      chatRoom = newRoom;
+      const name = (nameInput.value || '{{ current_user.username }}').trim();
+      socket.emit('join_chat', { room: chatRoom, name });
+      chatLog.innerHTML = '';
+      chatStatus.textContent = `Chat: ${chatRoom}`;
+    });
+
+    async function ensureLocalStream() {
+      if (localStream && localStream.getAudioTracks().length > 0) return localStream;
+      try {
+        localStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
+        return localStream;
+      } catch (e) {
+        alert('Microphone access is required: ' + e.message);
+        throw e;
+      }
+    }
+
+    function addStreamToAllPeers() {
+      if (!localStream) return;
+      const tracks = localStream.getAudioTracks();
+      if (tracks.length === 0) return;
+      const track = tracks[0];
+      Object.values(pcs).forEach(pc => {
+        // Check if we already have a sender for audio
+        const sender = pc.getSenders().find(s => s.track && s.track.kind === 'audio');
+        if (sender) {
+          try { sender.replaceTrack(track); } catch {}
+        } else {
+          try { pc.addTrack(track, localStream); } catch {}
+        }
+      });
+    }
+
+    function setMicEnabled(enabled) {
+      if (!localStream) return;
+      localStream.getAudioTracks().forEach(t => t.enabled = enabled);
+      micOn = enabled;
+      muteBtn.textContent = micOn ? '🔇 Mute' : '🎙️ Unmute';
+      muteBtn.classList.toggle('muted', micOn);
+      status.textContent = micOn ? 'Mic: ON' : 'Mic: OFF';
+    }
+
+    // Keep existing WebRTC join for broadcasting only
     joinBtn.onclick = async () => {
       joinBtn.disabled = true;
-      const room = (roomInput.value || 'demo-room').trim();
+      const room = (roomInput.value || 'DEV-DANK').trim();
       const name = (nameInput.value || '{{ current_user.username }}').trim();
       
       try {
-        localStream = await navigator.mediaDevices.getUserMedia({ 
-          audio: { 
-            echoCancellation: true, 
-            noiseSuppression: true,
-            autoGainControl: true
-          } 
-        });
+        await ensureLocalStream();
       } catch (err) {
-        alert('Microphone access is required: ' + err.message);
         joinBtn.disabled = false;
         return;
       }
 
-      // Start muted by default
       localStream.getAudioTracks().forEach(t => t.enabled = false);
       micOn = false;
       muteBtn.textContent = '🎙️ Unmute';
@@ -295,6 +456,8 @@
       joinedRoom = room;
       status.textContent = `Joined (signaling)...`;
       leaveBtn.disabled = false;
+      chatStatus.textContent = `Chat: ${chatRoom || room}`;
+      sendBtn.disabled = false;
     };
 
     leaveBtn.onclick = () => {
@@ -307,16 +470,51 @@
       muteBtn.disabled = true;
       status.textContent = 'Left room';
       remotes.innerHTML = '<div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>';
+      // Do not disable chat on broadcast leave
     };
 
-    muteBtn.onclick = () => {
-      if (!localStream) return;
-      micOn = !micOn;
-      localStream.getAudioTracks().forEach(t => t.enabled = micOn);
-      muteBtn.textContent = micOn ? '🔇 Mute' : '🎙️ Unmute';
-      muteBtn.classList.toggle('muted', micOn);
-      status.textContent = micOn ? 'Mic: ON' : 'Mic: OFF';
+    muteBtn.onclick = async () => {
+      try {
+        await ensureLocalStream();
+        addStreamToAllPeers();
+        setMicEnabled(!micOn);
+      } catch {}
     };
+
+    sendBtn.onclick = () => sendChat();
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendChat();
+    });
+
+    function appendChat(user, message) {
+      const div = document.createElement('div');
+      const isOwn = user === 'Me';
+      div.className = `msg ${isOwn ? 'msg-own' : 'msg-other'}`;
+      
+      const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const username = isOwn ? '{{ current_user.username }}' : user;
+      
+      div.innerHTML = `
+        <div class="msg-bubble">${message}</div>
+        <div class="msg-info">${username} • ${time}</div>
+      `;
+      chatLog.appendChild(div);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function sendChat() {
+      if (!chatRoom) return;
+      const text = (chatInput.value || '').trim();
+      if (!text) return;
+      socket.emit('chat', { room: chatRoom, message: text });
+      appendChat('Me', text);
+      chatInput.value = '';
+    }
+
+    socket.on('chat', (data) => {
+      // data from others only (server uses include_self=False)
+      appendChat(data.user, data.message);
+    });
 
     // When the server confirms join, it sends "joined" with our sid and list of others
     socket.on('joined', async (data) => {
