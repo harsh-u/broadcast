@@ -1116,3 +1116,68 @@
 2025-08-29 09:13:08,202 - INFO - Registration page accessed
 2025-08-29 09:13:08,214 - INFO - 127.0.0.1 - - [2025-08-29 09:13:08] "GET /register HTTP/1.1" 200 6629 0.013168
 2025-08-29 09:13:08,291 - INFO - 127.0.0.1 - - [2025-08-29 09:13:08] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 331 0.001600
+2025-08-31 17:03:11,810 - INFO - Starting Broadcast App Server...
+2025-08-31 17:03:11,810 - INFO - Database initialized successfully
+2025-08-31 17:03:11,814 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-31 17:03:11,908 - INFO - Home page accessed - User authenticated: True
+2025-08-31 17:03:11,908 - INFO - User 'harsh' accessing broadcast page
+2025-08-31 17:03:11,916 - INFO - 127.0.0.1 - - [2025-08-31 17:03:11] "GET / HTTP/1.1" 200 18787 0.012924
+2025-08-31 17:03:12,953 - INFO - 127.0.0.1 - - [2025-08-31 17:03:12] "GET /socket.io/?EIO=4&transport=polling&t=PZ_vnnr HTTP/1.1" 200 254 0.000715
+2025-08-31 17:03:12,972 - INFO - 127.0.0.1 - - [2025-08-31 17:03:12] "POST /socket.io/?EIO=4&transport=polling&t=PZ_vno0&sid=TzZEOlRExry6Ee19AAAA HTTP/1.1" 200 195 0.001314
+2025-08-31 17:03:12,973 - INFO - 127.0.0.1 - - [2025-08-31 17:03:12] "GET /socket.io/?EIO=4&transport=polling&t=PZ_vno1&sid=TzZEOlRExry6Ee19AAAA HTTP/1.1" 200 157 0.000148
+2025-08-31 17:03:13,020 - INFO - [CHAT] User 'harsh' (SID: Cuy2Di2uAEEDEbEHAAAB) joined chat room: DEV-DANK
+2025-08-31 17:03:14,462 - INFO - Home page accessed - User authenticated: True
+2025-08-31 17:03:14,463 - INFO - User 'harsh' accessing broadcast page
+2025-08-31 17:03:14,463 - INFO - 127.0.0.1 - - [2025-08-31 17:03:14] "GET / HTTP/1.1" 200 18787 0.002007
+2025-08-31 17:03:14,468 - INFO - User disconnected (SID: Cuy2Di2uAEEDEbEHAAAB)
+2025-08-31 17:03:14,490 - INFO - 127.0.0.1 - - [2025-08-31 17:03:14] "GET /socket.io/?EIO=4&transport=polling&t=PZ_vo9r HTTP/1.1" 200 254 0.000705
+2025-08-31 17:03:14,540 - INFO - 127.0.0.1 - - [2025-08-31 17:03:14] "POST /socket.io/?EIO=4&transport=polling&t=PZ_voAd&sid=YLq3h4sG6ENwiy15AAAC HTTP/1.1" 200 195 0.000883
+2025-08-31 17:03:14,541 - INFO - 127.0.0.1 - - [2025-08-31 17:03:14] "GET /socket.io/?EIO=4&transport=polling&t=PZ_voAe&sid=YLq3h4sG6ENwiy15AAAC HTTP/1.1" 200 189 0.000356
+2025-08-31 17:03:14,588 - INFO - [CHAT] User 'harsh' (SID: IIFqjFA4vP4gPMxEAAAD) joined chat room: DEV-DANK
+2025-08-31 17:07:09,638 - INFO - Starting Broadcast App Server...
+2025-08-31 17:07:09,639 - INFO - Database initialized successfully
+2025-08-31 17:07:09,643 - INFO - Server starting on http://0.0.0.0:5000
+2025-08-31 17:07:14,044 - INFO - Home page accessed - User authenticated: True
+2025-08-31 17:07:14,044 - INFO - User 'harsh' accessing broadcast page
+2025-08-31 17:07:14,057 - INFO - 127.0.0.1 - - [2025-08-31 17:07:14] "GET / HTTP/1.1" 200 18787 0.018133
+2025-08-31 17:07:14,086 - INFO - 127.0.0.1 - - [2025-08-31 17:07:14] "GET /socket.io/?EIO=4&transport=polling&t=PZ_wifN HTTP/1.1" 200 254 0.000591
+2025-08-31 17:07:14,135 - INFO - 127.0.0.1 - - [2025-08-31 17:07:14] "POST /socket.io/?EIO=4&transport=polling&t=PZ_wigI&sid=T2p8pa9FcK9z0OziAAAA HTTP/1.1" 200 195 0.001147
+2025-08-31 17:07:14,137 - INFO - 127.0.0.1 - - [2025-08-31 17:07:14] "GET /socket.io/?EIO=4&transport=polling&t=PZ_wigK&sid=T2p8pa9FcK9z0OziAAAA HTTP/1.1" 200 157 0.000302
+2025-08-31 17:07:14,183 - INFO - [CHAT] User 'harsh' (SID: JeBXA5XKc9yXZCaMAAAB) joined chat room: DEV-DANK
+2025-08-31 17:07:15,567 - INFO - User 'harsh' logged out
+2025-08-31 17:07:15,568 - INFO - 127.0.0.1 - - [2025-08-31 17:07:15] "GET /logout HTTP/1.1" 302 506 0.002576
+2025-08-31 17:07:15,580 - INFO - Login page accessed
+2025-08-31 17:07:15,587 - INFO - 127.0.0.1 - - [2025-08-31 17:07:15] "GET /login HTTP/1.1" 200 4468 0.008610
+2025-08-31 17:07:15,658 - INFO - User disconnected (SID: JeBXA5XKc9yXZCaMAAAB)
+2025-08-31 17:07:21,266 - INFO - Login attempt for username: harsh
+2025-08-31 17:07:21,432 - INFO - Successful login for user: harsh
+2025-08-31 17:07:21,433 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "POST /login HTTP/1.1" 302 651 0.168489
+2025-08-31 17:07:21,437 - INFO - Home page accessed - User authenticated: True
+2025-08-31 17:07:21,437 - INFO - User 'harsh' accessing broadcast page
+2025-08-31 17:07:21,438 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "GET / HTTP/1.1" 200 19229 0.002384
+2025-08-31 17:07:21,508 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "GET /socket.io/?EIO=4&transport=polling&t=PZ_wkTR HTTP/1.1" 200 254 0.000569
+2025-08-31 17:07:21,557 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "POST /socket.io/?EIO=4&transport=polling&t=PZ_wkUG&sid=KedbsavGa1vHkV6xAAAC HTTP/1.1" 200 195 0.001173
+2025-08-31 17:07:21,560 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "GET /socket.io/?EIO=4&transport=polling&t=PZ_wkUH&sid=KedbsavGa1vHkV6xAAAC HTTP/1.1" 200 189 0.000402
+2025-08-31 17:07:21,567 - INFO - 127.0.0.1 - - [2025-08-31 17:07:21] "GET /socket.io/?EIO=4&transport=polling&t=PZ_wkUS&sid=KedbsavGa1vHkV6xAAAC HTTP/1.1" 200 157 0.000313
+2025-08-31 17:07:21,614 - INFO - [CHAT] User 'harsh' (SID: Xmval5dTAFwZH4VFAAAD) joined chat room: DEV-DANK
+2025-08-31 17:07:27,759 - INFO - Chat in 'DEV-DANK' from 'harsh': hi
+2025-08-31 17:07:30,809 - INFO - User 'harsh' logged out
+2025-08-31 17:07:30,811 - INFO - 127.0.0.1 - - [2025-08-31 17:07:30] "GET /logout HTTP/1.1" 302 506 0.003670
+2025-08-31 17:07:30,820 - INFO - Login page accessed
+2025-08-31 17:07:30,822 - INFO - 127.0.0.1 - - [2025-08-31 17:07:30] "GET /login HTTP/1.1" 200 4468 0.002178
+2025-08-31 17:07:30,905 - INFO - User disconnected (SID: Xmval5dTAFwZH4VFAAAD)
+2025-08-31 17:07:33,697 - INFO - Login attempt for username: admin
+2025-08-31 17:07:33,838 - INFO - Successful login for user: admin
+2025-08-31 17:07:33,839 - INFO - 127.0.0.1 - - [2025-08-31 17:07:33] "POST /login HTTP/1.1" 302 666 0.143214
+2025-08-31 17:07:33,850 - INFO - 127.0.0.1 - - [2025-08-31 17:07:33] "GET /admin HTTP/1.1" 200 3631 0.008527
+2025-08-31 17:07:41,267 - INFO - Admin 'admin' deleted message from 'harsh': hi
+2025-08-31 17:07:41,268 - INFO - 127.0.0.1 - - [2025-08-31 17:07:41] "POST /admin/delete_message/0 HTTP/1.1" 302 666 0.002459
+2025-08-31 17:07:41,276 - INFO - 127.0.0.1 - - [2025-08-31 17:07:41] "GET /admin HTTP/1.1" 200 2849 0.003701
+2025-08-31 17:07:43,356 - INFO - Home page accessed - User authenticated: True
+2025-08-31 17:07:43,357 - INFO - Admin 'admin' redirected to admin dashboard
+2025-08-31 17:07:43,357 - INFO - 127.0.0.1 - - [2025-08-31 17:07:43] "GET / HTTP/1.1" 302 351 0.001885
+2025-08-31 17:07:43,363 - INFO - 127.0.0.1 - - [2025-08-31 17:07:43] "GET /admin HTTP/1.1" 200 2506 0.002193
+2025-08-31 17:07:45,650 - INFO - User 'admin' logged out
+2025-08-31 17:07:45,651 - INFO - 127.0.0.1 - - [2025-08-31 17:07:45] "GET /logout HTTP/1.1" 302 506 0.002739
+2025-08-31 17:07:45,657 - INFO - Login page accessed
+2025-08-31 17:07:45,658 - INFO - 127.0.0.1 - - [2025-08-31 17:07:45] "GET /login HTTP/1.1" 200 4468 0.001841

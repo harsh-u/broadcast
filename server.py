@@ -170,7 +170,19 @@ def logout():
 def admin_dashboard():
     pending_users = User.query.filter_by(is_approved=False).all()
     approved_users = User.query.filter_by(is_approved=True).all()
-    return render_template('admin.html', pending_users=pending_users, approved_users=approved_users)
+    # Get all messages from all rooms
+    all_messages = []
+    for room, messages in CHAT_HISTORY.items():
+        for i, msg in enumerate(messages):
+            all_messages.append({
+                'room': room,
+                'index': i,
+                'user': msg['user'],
+                'message': msg['message']
+            })
+    # Sort by room and message order
+    all_messages.sort(key=lambda x: (x['room'], x['index']))
+    return render_template('admin.html', pending_users=pending_users, approved_users=approved_users, all_messages=all_messages)
 
 @app.route('/admin/approve/<int:user_id>', methods=['POST'])
 @login_required
@@ -199,6 +211,19 @@ def reject_user(user_id):
     db.session.commit()
     logger.info(f"Admin '{current_user.username}' rejected (deleted) user '{username}'")
     flash(f"Rejected and removed user '{username}'", 'success')
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/admin/delete_message/<int:message_index>', methods=['POST'])
+@login_required
+@admin_required
+def delete_message(message_index):
+    room = request.form.get('room', 'DEV-DANK')
+    if room in CHAT_HISTORY and 0 <= message_index < len(CHAT_HISTORY[room]):
+        deleted_msg = CHAT_HISTORY[room].pop(message_index)
+        logger.info(f"Admin '{current_user.username}' deleted message from '{deleted_msg['user']}': {deleted_msg['message']}")
+        flash(f"Deleted message from {deleted_msg['user']}", 'success')
+    else:
+        flash('Message not found', 'error')
     return redirect(url_for('admin_dashboard'))
 
 # Client tells server: join a room

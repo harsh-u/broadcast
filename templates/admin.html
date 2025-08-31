@@ -95,5 +95,38 @@
       <p class="muted">No approved users yet.</p>
     {% endif %}
   </div>
+
+  <div class="section">
+    <h2>Chat Messages</h2>
+    {% if all_messages %}
+      <table>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>User</th>
+            <th>Message</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for msg in all_messages %}
+            <tr>
+              <td>{{ msg.room }}</td>
+              <td>{{ msg.user }}</td>
+              <td style="max-width: 300px; word-wrap: break-word;">{{ msg.message }}</td>
+              <td>
+                <form method="POST" action="{{ url_for('delete_message', message_index=msg.index) }}" style="display:inline;">
+                  <input type="hidden" name="room" value="{{ msg.room }}">
+                  <button type="submit" style="background:#dc3545;color:white;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:0.8rem;">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="muted">No messages yet.</p>
+    {% endif %}
+  </div>
 </body>
 </html>
