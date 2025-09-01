@@ -35,7 +35,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="gevent")
 
 ROOMS = {}  # room_name -> set(socket_id)
 CHAT_HISTORY = defaultdict(list)  # room_name -> [{user, message}]
-MAX_CHAT_HISTORY = 100
+MAX_CHAT_HISTORY = 1000
 
 # User model
 class User(UserMixin, db.Model):
