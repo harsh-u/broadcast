@@ -1,5 +1,5 @@
 # server.py
-from flask import Flask, render_template, request, redirect, url_for, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, abort, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -7,10 +7,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import logging
 from collections import defaultdict
+import boto3
+from botocore.exceptions import ClientError
+import urllib.parse
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "secret!")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///users.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configure logging
@@ -23,6 +30,28 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = os.environ.get('AWS_REGION', 'eu-north-1')
+S3_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME', 'soothing-playlist')
+
+# Initialize S3 client if credentials are available
+s3_client = None
+if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+    try:
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=AWS_REGION
+        )
+        logger.info(f"AWS S3 client initialized for bucket: {S3_BUCKET_NAME}")
+    except Exception as e:
+        logger.error(f"Failed to initialize S3 client: {e}")
+else:
+    logger.warning("AWS credentials not found. S3 functionality will be disabled.")
 
 # Initialize extensions
 db = SQLAlchemy(app)
@@ -93,6 +122,7 @@ def login():
         logger.info(f"Login attempt for username: {username}")
         
         user = User.query.filter_by(username=username).first()
+        print("#123456789", user)
         if user and user.check_password(password):
             if not user.is_approved:
                 logger.warning(f"Login blocked for unapproved user: {username}")
@@ -316,6 +346,73 @@ def on_leave_chat(data):
     sid = request.sid
     leave_room(room)
     logger.info(f"[CHAT] User (SID: {sid}) left chat room: {room}")
+
+# Music API endpoints
+@app.route('/api/songs')
+@login_required
+def get_songs():
+    """Get list of songs from S3 bucket"""
+    if not s3_client:
+        logger.warning("S3 client not available")
+        return jsonify([])
+    
+    try:
+        logger.info(f"Fetching songs from S3 bucket: {S3_BUCKET_NAME}")
+        response = s3_client.list_objects_v2(Bucket=S3_BUCKET_NAME)
+        
+        songs = []
+        if 'Contents' in response:
+            for obj in response['Contents']:
+                # Skip directories and non-audio files
+                if obj['Key'].endswith('/') or not any(obj['Key'].lower().endswith(ext) for ext in ['.mp3', '.wav', '.m4a', '.flac']):
+                    continue
+                
+                # Decode URL-encoded filename
+                song_name = urllib.parse.unquote(obj['Key'])
+                songs.append({
+                    'name': song_name,
+                    's3_key': obj['Key'],
+                    'size': obj['Size']
+                })
+        
+        logger.info(f"Returning {len(songs)} songs")
+        return jsonify(songs)
+        
+    except ClientError as e:
+        logger.error(f"S3 error: {e}")
+        return jsonify([])
+    except Exception as e:
+        logger.error(f"Error fetching songs: {e}")
+        return jsonify([])
+
+@app.route('/stream/<path:s3_key>')
+@login_required
+def stream_song(s3_key):
+    """Generate presigned URL for streaming a song from S3"""
+    if not s3_client:
+        logger.warning("S3 client not available for streaming")
+        abort(404)
+    
+    try:
+        # Decode the S3 key
+        decoded_key = urllib.parse.unquote(s3_key)
+        logger.info(f"Generating presigned URL for: {decoded_key}")
+        
+        # Generate presigned URL for streaming
+        presigned_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': S3_BUCKET_NAME, 'Key': decoded_key},
+            ExpiresIn=3600  # 1 hour
+        )
+        
+        return redirect(presigned_url)
+        
+    except ClientError as e:
+        logger.error(f"S3 streaming error: {e}")
+        abort(404)
+    except Exception as e:
+        logger.error(f"Error generating presigned URL: {e}")
+        abort(404)
 
 def _ensure_schema_and_seed_admin():
     # Add columns to existing SQLite table if missing

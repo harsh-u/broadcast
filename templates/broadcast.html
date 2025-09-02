@@ -317,6 +317,33 @@
       <div class="no-peers">No peers connected yet. Join a room to start broadcasting!</div>
     </div>
 
+    <!-- Simple Music Player -->
+    <div id="musicPlayer" style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px; border: 2px solid #e1e5e9;">
+      <h3 style="margin-bottom: 15px; color: #333;">🎵 Music Player</h3>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+        <select id="songSelect" style="flex: 1; padding: 10px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+          <option value="">Select a song...</option>
+        </select>
+        <button id="playBtn" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Play</button>
+        <button id="stopBtn" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Stop</button>
+      </div>
+      
+      <div id="currentSongInfo" style="display: none; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+        <h4 style="margin-bottom: 10px; color: #333;">Now Playing:</h4>
+        <div id="currentSongName" style="font-size: 1.2rem; font-weight: 600; color: #333; margin-bottom: 5px;"></div>
+        <div id="currentSongUser" style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"></div>
+        <audio id="audioPlayer" controls style="width: 100%; margin-top: 10px;">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      
+      <div id="songQueue" style="margin-top: 15px;">
+        <h4 style="margin-bottom: 10px; color: #333;">Queue:</h4>
+        <div id="queueList" style="max-height: 200px; overflow-y: auto;"></div>
+      </div>
+    </div>
+
     <div id="chat" class="chat-container">
       <div class="chat-header">
         <div class="chat-title">Room Chat</div>
@@ -355,7 +382,97 @@
     const chatStatus = document.getElementById('chatStatus');
     const currentUsername = '{{ current_user.username }}';
 
+    // Music player elements
+    const songSelect = document.getElementById('songSelect');
+    const playBtn = document.getElementById('playBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const currentSongInfo = document.getElementById('currentSongInfo');
+    const currentSongName = document.getElementById('currentSongName');
+    const currentSongUser = document.getElementById('currentSongUser');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const queueList = document.getElementById('queueList');
+
     const RTC_CONFIG = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+    // Load songs from S3
+    async function loadSongs() {
+      try {
+        console.log('Loading songs from S3...');
+        const response = await fetch('/api/songs');
+        const songs = await response.json();
+        
+        songSelect.innerHTML = '<option value="">Select a song...</option>';
+        songs.forEach(song => {
+          const option = document.createElement('option');
+          option.value = JSON.stringify({name: song.name, s3_key: song.s3_key});
+          option.textContent = song.name;
+          songSelect.appendChild(option);
+        });
+        console.log(`Loaded ${songs.length} songs`);
+      } catch (error) {
+        console.error('Failed to load songs:', error);
+      }
+    }
+
+    // Play selected song
+    function playSong() {
+      if (!songSelect.value) {
+        alert('Please select a song first');
+        return;
+      }
+      
+      const songData = JSON.parse(songSelect.value);
+      console.log('Playing song:', songData);
+      
+      // Show current song info
+      currentSongInfo.style.display = 'block';
+      currentSongName.textContent = songData.name;
+      currentSongUser.textContent = `Added by ${currentUsername}`;
+      
+      // Set audio source and play
+      audioPlayer.src = `/stream/${songData.s3_key}`;
+      audioPlayer.load();
+      audioPlayer.play().catch(e => {
+        console.log('Auto-play prevented:', e);
+        alert('Click play on the audio player to start the song');
+      });
+      
+      // Add to queue
+      addToQueue(songData);
+    }
+
+    // Stop current song
+    function stopSong() {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      currentSongInfo.style.display = 'none';
+      console.log('Song stopped');
+    }
+
+    // Add song to queue
+    function addToQueue(songData) {
+      const queueItem = document.createElement('div');
+      queueItem.style.padding = '10px';
+      queueItem.style.margin = '5px 0';
+      queueItem.style.background = '#f8f9fa';
+      queueItem.style.borderRadius = '5px';
+      queueItem.style.border = '1px solid #e1e5e9';
+      queueItem.innerHTML = `
+        <div style="font-weight: 600;">${songData.name}</div>
+        <div style="font-size: 0.8rem; color: #666;">Added by ${currentUsername}</div>
+      `;
+      queueList.appendChild(queueItem);
+    }
+
+    // Event listeners
+    playBtn.addEventListener('click', playSong);
+    stopBtn.addEventListener('click', stopSong);
+
+    // Audio player events
+    audioPlayer.addEventListener('ended', () => {
+      console.log('Song ended');
+      currentSongInfo.style.display = 'none';
+    });
 
     // Capture my socket id
     socket.on('connect', () => {
@@ -364,11 +481,12 @@
 
     // Join chat immediately when page loads to enable text chat
     window.addEventListener('load', () => {
+      loadSongs(); // Load songs when page loads
       chatRoom = (roomInput.value || 'DEV-DANK').trim();
       const name = (nameInput.value || '{{ current_user.username }}').trim();
       socket.emit('join_chat', { room: chatRoom, name });
       chatStatus.textContent = `Chat: ${chatRoom}`;
-      sendBtn.disabled = false; // enable chat regardless of broadcast join
+      sendBtn.disabled = false;
     });
 
     socket.on('chat_history', (data) => {

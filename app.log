@@ -1181,3 +1181,275 @@
 2025-08-31 17:07:45,651 - INFO - 127.0.0.1 - - [2025-08-31 17:07:45] "GET /logout HTTP/1.1" 302 506 0.002739
 2025-08-31 17:07:45,657 - INFO - Login page accessed
 2025-08-31 17:07:45,658 - INFO - 127.0.0.1 - - [2025-08-31 17:07:45] "GET /login HTTP/1.1" 200 4468 0.001841
+2025-09-01 20:24:28,382 - INFO - Starting Broadcast App Server...
+2025-09-01 20:24:28,383 - INFO - Database initialized successfully
+2025-09-01 20:24:28,388 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 20:24:36,225 - INFO - 127.0.0.1 - - [2025-09-01 20:24:36] "GET /logout HTTP/1.1" 302 565 0.009604
+2025-09-01 20:24:36,239 - INFO - Login page accessed
+2025-09-01 20:24:36,259 - INFO - 127.0.0.1 - - [2025-09-01 20:24:36] "GET /login?next=%2Flogout HTTP/1.1" 200 4478 0.021456
+2025-09-01 20:24:39,649 - INFO - Login attempt for username: harsh
+2025-09-01 20:24:39,824 - INFO - Successful login for user: harsh
+2025-09-01 20:24:39,824 - INFO - 127.0.0.1 - - [2025-09-01 20:24:39] "POST /login HTTP/1.1" 302 651 0.177044
+2025-09-01 20:24:39,829 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:24:39,829 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:24:39,833 - INFO - 127.0.0.1 - - [2025-09-01 20:24:39] "GET / HTTP/1.1" 200 24103 0.006312
+2025-09-01 20:24:39,979 - INFO - 127.0.0.1 - - [2025-09-01 20:24:39] "GET /socket.io/?EIO=4&transport=polling&t=Pa5nUTb HTTP/1.1" 200 254 0.001155
+2025-09-01 20:24:39,987 - INFO - 127.0.0.1 - - [2025-09-01 20:24:39] "GET /api/songs HTTP/1.1" 404 331 0.002636
+2025-09-01 20:24:40,021 - INFO - 127.0.0.1 - - [2025-09-01 20:24:40] "POST /socket.io/?EIO=4&transport=polling&t=Pa5nUTt&sid=ai_Rw-Wwa7P2dtG0AAAA HTTP/1.1" 200 195 0.001912
+2025-09-01 20:24:40,024 - INFO - 127.0.0.1 - - [2025-09-01 20:24:40] "GET /socket.io/?EIO=4&transport=polling&t=Pa5nUTv&sid=ai_Rw-Wwa7P2dtG0AAAA HTTP/1.1" 200 189 0.000605
+2025-09-01 20:24:40,041 - INFO - [CHAT] User 'harsh' (SID: bYFzFjBCM6TKdtZIAAAB) joined chat room: DEV-DANK
+2025-09-01 20:25:18,407 - INFO - Chat in 'DEV-DANK' from 'harsh': Hi
+2025-09-01 20:25:20,351 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:25:20,351 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:25:20,353 - INFO - 127.0.0.1 - - [2025-09-01 20:25:20] "GET / HTTP/1.1" 200 23661 0.004982
+2025-09-01 20:25:20,370 - INFO - User disconnected (SID: bYFzFjBCM6TKdtZIAAAB)
+2025-09-01 20:25:20,402 - INFO - 127.0.0.1 - - [2025-09-01 20:25:20] "GET /socket.io/?EIO=4&transport=polling&t=Pa5neLC HTTP/1.1" 200 254 0.000931
+2025-09-01 20:25:20,436 - INFO - 127.0.0.1 - - [2025-09-01 20:25:20] "GET /api/songs HTTP/1.1" 404 331 0.001797
+2025-09-01 20:25:20,438 - INFO - 127.0.0.1 - - [2025-09-01 20:25:20] "POST /socket.io/?EIO=4&transport=polling&t=Pa5neLd&sid=4ypkB2hNbPvEMjXYAAAC HTTP/1.1" 200 195 0.001185
+2025-09-01 20:25:20,446 - INFO - 127.0.0.1 - - [2025-09-01 20:25:20] "GET /socket.io/?EIO=4&transport=polling&t=Pa5neLf&sid=4ypkB2hNbPvEMjXYAAAC HTTP/1.1" 200 157 0.000519
+2025-09-01 20:25:20,511 - INFO - [CHAT] User 'harsh' (SID: aT-_5IblgWZSAY1ZAAAD) joined chat room: DEV-DANK
+2025-09-01 20:25:21,757 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:25:21,757 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:25:21,759 - INFO - 127.0.0.1 - - [2025-09-01 20:25:21] "GET / HTTP/1.1" 200 23661 0.004680
+2025-09-01 20:25:21,772 - INFO - User disconnected (SID: aT-_5IblgWZSAY1ZAAAD)
+2025-09-01 20:25:21,804 - INFO - 127.0.0.1 - - [2025-09-01 20:25:21] "GET /socket.io/?EIO=4&transport=polling&t=Pa5neg_ HTTP/1.1" 200 254 0.000696
+2025-09-01 20:25:21,819 - INFO - 127.0.0.1 - - [2025-09-01 20:25:21] "GET /api/songs HTTP/1.1" 404 331 0.001608
+2025-09-01 20:25:21,829 - INFO - 127.0.0.1 - - [2025-09-01 20:25:21] "POST /socket.io/?EIO=4&transport=polling&t=Pa5nehT&sid=8RJ8fEWkhcObKz9UAAAE HTTP/1.1" 200 195 0.001379
+2025-09-01 20:25:21,843 - INFO - 127.0.0.1 - - [2025-09-01 20:25:21] "GET /socket.io/?EIO=4&transport=polling&t=Pa5nehV&sid=8RJ8fEWkhcObKz9UAAAE HTTP/1.1" 200 157 0.000416
+2025-09-01 20:25:21,892 - INFO - [CHAT] User 'harsh' (SID: gLZWDuMIKNqG1YaqAAAF) joined chat room: DEV-DANK
+2025-09-01 20:25:22,338 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:25:22,338 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:25:22,339 - INFO - 127.0.0.1 - - [2025-09-01 20:25:22] "GET / HTTP/1.1" 200 23661 0.003812
+2025-09-01 20:25:22,354 - INFO - User disconnected (SID: gLZWDuMIKNqG1YaqAAAF)
+2025-09-01 20:25:22,380 - INFO - 127.0.0.1 - - [2025-09-01 20:25:22] "GET /socket.io/?EIO=4&transport=polling&t=Pa5neq7 HTTP/1.1" 200 254 0.000574
+2025-09-01 20:25:22,394 - INFO - 127.0.0.1 - - [2025-09-01 20:25:22] "GET /api/songs HTTP/1.1" 404 331 0.001456
+2025-09-01 20:25:22,432 - INFO - 127.0.0.1 - - [2025-09-01 20:25:22] "POST /socket.io/?EIO=4&transport=polling&t=Pa5nequ&sid=T9vykXTlyQky5IrYAAAG HTTP/1.1" 200 195 0.000974
+2025-09-01 20:25:22,434 - INFO - 127.0.0.1 - - [2025-09-01 20:25:22] "GET /socket.io/?EIO=4&transport=polling&t=Pa5neqv&sid=T9vykXTlyQky5IrYAAAG HTTP/1.1" 200 157 0.000369
+2025-09-01 20:25:22,483 - INFO - [CHAT] User 'harsh' (SID: 8OUzBLx7objHuIIXAAAH) joined chat room: DEV-DANK
+2025-09-01 20:29:29,421 - INFO - AWS S3 client initialized for bucket: soothing-playlist
+2025-09-01 20:29:29,448 - INFO - Starting Broadcast App Server...
+2025-09-01 20:29:29,449 - INFO - Database initialized successfully
+2025-09-01 20:29:29,453 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 20:29:34,073 - INFO - 127.0.0.1 - - [2025-09-01 20:29:34] "GET /socket.io/?EIO=4&transport=polling&t=Pa5ocGh HTTP/1.1" 200 254 0.001661
+2025-09-01 20:29:34,090 - INFO - 127.0.0.1 - - [2025-09-01 20:29:34] "POST /socket.io/?EIO=4&transport=polling&t=Pa5ocG_&sid=rrPm9K083ccdx90HAAAA HTTP/1.1" 200 195 0.002934
+2025-09-01 20:29:34,095 - INFO - 127.0.0.1 - - [2025-09-01 20:29:34] "GET /socket.io/?EIO=4&transport=polling&t=Pa5ocH2&sid=rrPm9K083ccdx90HAAAA HTTP/1.1" 200 157 0.000553
+2025-09-01 20:29:42,503 - INFO - 127.0.0.1 - - [2025-09-01 20:29:42] "GET /api/songs HTTP/1.1" 302 580 0.002156
+2025-09-01 20:29:55,546 - INFO - Home page accessed - User authenticated: False
+2025-09-01 20:29:55,547 - INFO - Redirecting unauthenticated user to login
+2025-09-01 20:29:55,548 - INFO - 127.0.0.1 - - [2025-09-01 20:29:55] "GET / HTTP/1.1" 302 351 0.002640
+2025-09-01 20:29:55,557 - INFO - Login page accessed
+2025-09-01 20:29:55,573 - INFO - 127.0.0.1 - - [2025-09-01 20:29:55] "GET /login HTTP/1.1" 200 4098 0.016897
+2025-09-01 20:29:55,624 - INFO - User disconnected (SID: E226VxH-cBj9d7nyAAAB)
+2025-09-01 20:29:58,624 - INFO - Login attempt for username: harsh
+2025-09-01 20:29:58,834 - INFO - Successful login for user: harsh
+2025-09-01 20:29:58,834 - INFO - 127.0.0.1 - - [2025-09-01 20:29:58] "POST /login HTTP/1.1" 302 651 0.211728
+2025-09-01 20:29:58,839 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:29:58,839 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:29:58,843 - INFO - 127.0.0.1 - - [2025-09-01 20:29:58] "GET / HTTP/1.1" 200 24103 0.006519
+2025-09-01 20:29:58,929 - INFO - 127.0.0.1 - - [2025-09-01 20:29:58] "GET /socket.io/?EIO=4&transport=polling&t=Pa5oiL1 HTTP/1.1" 200 254 0.000600
+2025-09-01 20:29:58,941 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 20:30:00,448 - INFO - Returning 5 songs
+2025-09-01 20:30:00,449 - INFO - 127.0.0.1 - - [2025-09-01 20:30:00] "GET /api/songs HTTP/1.1" 200 658 1.510305
+2025-09-01 20:30:00,451 - INFO - 127.0.0.1 - - [2025-09-01 20:30:00] "POST /socket.io/?EIO=4&transport=polling&t=Pa5oiLS&sid=LMz3t-lv2rEBE_BfAAAC HTTP/1.1" 200 195 0.001008
+2025-09-01 20:30:00,453 - INFO - 127.0.0.1 - - [2025-09-01 20:30:00] "GET /socket.io/?EIO=4&transport=polling&t=Pa5oiLU&sid=LMz3t-lv2rEBE_BfAAAC HTTP/1.1" 200 157 0.000318
+2025-09-01 20:30:00,465 - INFO - [CHAT] User 'harsh' (SID: xJ7gY9Bo5aNRaeaQAAAD) joined chat room: DEV-DANK
+2025-09-01 20:30:03,256 - INFO - Generating presigned URL for: Chehre (PenduJatt.Com.Se).mp3
+2025-09-01 20:30:03,259 - INFO - 127.0.0.1 - - [2025-09-01 20:30:03] "GET /stream/Chehre%20(PenduJatt.Com.Se).mp3 HTTP/1.1" 302 1411 0.005833
+2025-09-01 20:30:18,157 - INFO - 127.0.0.1 - - [2025-09-01 20:30:18] "GET /favicon.ico HTTP/1.1" 404 331 0.001878
+2025-09-01 20:30:46,235 - INFO - Generating presigned URL for: Knife Brows (PenduJatt.Com.Se).mp3
+2025-09-01 20:30:46,239 - INFO - 127.0.0.1 - - [2025-09-01 20:30:46] "GET /stream/Knife%20Brows%20(PenduJatt.Com.Se).mp3 HTTP/1.1" 302 1432 0.007362
+2025-09-01 20:30:57,590 - INFO - Generating presigned URL for: Preet Re (PenduJatt.Com.Se).mp3
+2025-09-01 20:30:57,593 - INFO - 127.0.0.1 - - [2025-09-01 20:30:57] "GET /stream/Preet%20Re%20(PenduJatt.Com.Se).mp3 HTTP/1.1" 302 1423 0.006565
+2025-09-01 20:31:06,771 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:31:06,771 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:31:06,773 - INFO - 127.0.0.1 - - [2025-09-01 20:31:06] "GET / HTTP/1.1" 200 23661 0.003633
+2025-09-01 20:31:06,790 - INFO - User disconnected (SID: xJ7gY9Bo5aNRaeaQAAAD)
+2025-09-01 20:31:06,832 - INFO - 127.0.0.1 - - [2025-09-01 20:31:06] "GET /socket.io/?EIO=4&transport=polling&t=Pa5oyw1 HTTP/1.1" 200 254 0.000983
+2025-09-01 20:31:06,863 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 20:31:08,225 - INFO - Returning 5 songs
+2025-09-01 20:31:08,226 - INFO - 127.0.0.1 - - [2025-09-01 20:31:08] "GET /api/songs HTTP/1.1" 200 658 1.367408
+2025-09-01 20:31:08,228 - INFO - 127.0.0.1 - - [2025-09-01 20:31:08] "POST /socket.io/?EIO=4&transport=polling&t=Pa5oywh&sid=iHj4wrNd5fFDrKB8AAAE HTTP/1.1" 200 195 0.000616
+2025-09-01 20:31:08,229 - INFO - 127.0.0.1 - - [2025-09-01 20:31:08] "GET /socket.io/?EIO=4&transport=polling&t=Pa5oywj&sid=iHj4wrNd5fFDrKB8AAAE HTTP/1.1" 200 189 0.002214
+2025-09-01 20:31:08,237 - INFO - [CHAT] User 'harsh' (SID: A6tDnCmZn9mbxk_nAAAF) joined chat room: DEV-DANK
+2025-09-01 20:31:10,341 - INFO - Generating presigned URL for: Knife Brows (PenduJatt.Com.Se).mp3
+2025-09-01 20:31:10,344 - INFO - 127.0.0.1 - - [2025-09-01 20:31:10] "GET /stream/Knife%20Brows%20(PenduJatt.Com.Se).mp3 HTTP/1.1" 302 1432 0.005895
+2025-09-01 20:31:22,109 - INFO - 127.0.0.1 - - [2025-09-01 20:31:22] "GET /favicon.ico HTTP/1.1" 404 331 0.001888
+2025-09-01 20:31:27,756 - INFO - Home page accessed - User authenticated: False
+2025-09-01 20:31:27,756 - INFO - Redirecting unauthenticated user to login
+2025-09-01 20:31:27,758 - INFO - 127.0.0.1 - - [2025-09-01 20:31:27] "GET / HTTP/1.1" 302 351 0.001987
+2025-09-01 20:31:27,765 - INFO - Login page accessed
+2025-09-01 20:31:27,767 - INFO - 127.0.0.1 - - [2025-09-01 20:31:27] "GET /login HTTP/1.1" 200 4098 0.001667
+2025-09-01 20:31:28,007 - INFO - 127.0.0.1 - - [2025-09-01 20:31:28] "GET /favicon.ico HTTP/1.1" 404 331 0.001469
+2025-09-01 20:31:31,143 - INFO - Registration page accessed
+2025-09-01 20:31:31,152 - INFO - 127.0.0.1 - - [2025-09-01 20:31:31] "GET /register HTTP/1.1" 200 6629 0.009142
+2025-09-01 20:31:46,709 - INFO - Registration attempt for username: harsh1, email: harsh1@gmail.com
+2025-09-01 20:31:46,711 - WARNING - Registration failed for harsh1: Username already exists
+2025-09-01 20:31:46,713 - INFO - 127.0.0.1 - - [2025-09-01 20:31:46] "POST /register HTTP/1.1" 200 6990 0.004105
+2025-09-01 20:31:49,965 - INFO - Login page accessed
+2025-09-01 20:31:49,966 - INFO - 127.0.0.1 - - [2025-09-01 20:31:49] "GET /login HTTP/1.1" 200 4098 0.002008
+2025-09-01 20:31:55,837 - INFO - Login attempt for username: harsh1
+2025-09-01 20:31:56,103 - WARNING - Failed login attempt for username: harsh1
+2025-09-01 20:31:56,104 - INFO - 127.0.0.1 - - [2025-09-01 20:31:56] "POST /login HTTP/1.1" 200 4463 0.267275
+2025-09-01 20:32:00,806 - INFO - Registration page accessed
+2025-09-01 20:32:00,807 - INFO - 127.0.0.1 - - [2025-09-01 20:32:00] "GET /register HTTP/1.1" 200 6629 0.001889
+2025-09-01 20:33:54,118 - INFO - Registration attempt for username: harsh2, email: harsh2@gmail.com
+2025-09-01 20:33:54,303 - INFO - Successful registration for user: harsh2 (awaiting approval)
+2025-09-01 20:33:54,304 - INFO - 127.0.0.1 - - [2025-09-01 20:33:54] "POST /register HTTP/1.1" 302 565 0.186577
+2025-09-01 20:33:54,307 - INFO - Login page accessed
+2025-09-01 20:33:54,307 - INFO - 127.0.0.1 - - [2025-09-01 20:33:54] "GET /login HTTP/1.1" 200 4518 0.000964
+2025-09-01 20:34:03,586 - INFO - Login attempt for username: harsh2
+2025-09-01 20:34:03,827 - WARNING - Failed login attempt for username: harsh2
+2025-09-01 20:34:03,827 - INFO - 127.0.0.1 - - [2025-09-01 20:34:03] "POST /login HTTP/1.1" 200 4470 0.242351
+2025-09-01 20:34:07,919 - INFO - 127.0.0.1 - - [2025-09-01 20:34:07] "GET /admin/ HTTP/1.1" 404 331 0.001102
+2025-09-01 20:34:14,717 - INFO - 127.0.0.1 - - [2025-09-01 20:34:14] "GET /admin/ HTTP/1.1" 404 331 0.001179
+2025-09-01 20:34:29,976 - INFO - User 'harsh' logged out
+2025-09-01 20:34:29,978 - INFO - 127.0.0.1 - - [2025-09-01 20:34:29] "GET /logout HTTP/1.1" 302 506 0.005935
+2025-09-01 20:34:29,988 - INFO - Login page accessed
+2025-09-01 20:34:29,991 - INFO - 127.0.0.1 - - [2025-09-01 20:34:29] "GET /login HTTP/1.1" 200 4468 0.004109
+2025-09-01 20:34:30,088 - INFO - User disconnected (SID: A6tDnCmZn9mbxk_nAAAF)
+2025-09-01 20:34:38,098 - INFO - 127.0.0.1 - - [2025-09-01 20:34:38] "GET /admin HTTP/1.1" 302 582 0.003347
+2025-09-01 20:34:38,111 - INFO - Login page accessed
+2025-09-01 20:34:38,114 - INFO - 127.0.0.1 - - [2025-09-01 20:34:38] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.004067
+2025-09-01 20:34:42,871 - INFO - Login attempt for username: admin
+2025-09-01 20:34:43,036 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:34:43,037 - INFO - 127.0.0.1 - - [2025-09-01 20:34:43] "POST /login HTTP/1.1" 200 4470 0.167070
+2025-09-01 20:34:49,729 - INFO - 127.0.0.1 - - [2025-09-01 20:34:49] "GET /admin HTTP/1.1" 302 582 0.001983
+2025-09-01 20:34:49,737 - INFO - Login page accessed
+2025-09-01 20:34:49,738 - INFO - 127.0.0.1 - - [2025-09-01 20:34:49] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.002556
+2025-09-01 20:34:57,865 - INFO - Login attempt for username: admin
+2025-09-01 20:34:58,049 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:34:58,050 - INFO - 127.0.0.1 - - [2025-09-01 20:34:58] "POST /login HTTP/1.1" 200 4470 0.185620
+2025-09-01 20:51:37,253 - INFO - 127.0.0.1 - - [2025-09-01 20:51:37] "GET /admin HTTP/1.1" 302 582 0.001044
+2025-09-01 20:51:37,258 - INFO - Login page accessed
+2025-09-01 20:51:37,259 - INFO - 127.0.0.1 - - [2025-09-01 20:51:37] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.001622
+2025-09-01 20:51:52,116 - INFO - Login attempt for username: admin
+2025-09-01 20:51:52,240 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:51:52,241 - INFO - 127.0.0.1 - - [2025-09-01 20:51:52] "POST /login HTTP/1.1" 200 4470 0.125207
+2025-09-01 20:52:02,779 - INFO - AWS S3 client initialized for bucket: soothing-playlist
+2025-09-01 20:52:02,803 - INFO - Starting Broadcast App Server...
+2025-09-01 20:52:02,804 - INFO - Database initialized successfully
+2025-09-01 20:52:02,808 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 20:52:08,429 - INFO - 127.0.0.1 - - [2025-09-01 20:52:08] "GET /admin HTTP/1.1" 302 582 0.002230
+2025-09-01 20:52:08,433 - INFO - Login page accessed
+2025-09-01 20:52:08,442 - INFO - 127.0.0.1 - - [2025-09-01 20:52:08] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.009328
+2025-09-01 20:52:11,807 - INFO - Login attempt for username: admin
+2025-09-01 20:52:11,941 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:52:11,942 - INFO - 127.0.0.1 - - [2025-09-01 20:52:11] "POST /login HTTP/1.1" 200 4470 0.135446
+2025-09-01 20:52:53,043 - INFO - Login page accessed
+2025-09-01 20:52:53,045 - INFO - 127.0.0.1 - - [2025-09-01 20:52:53] "GET /login HTTP/1.1" 200 4098 0.001931
+2025-09-01 20:52:55,563 - INFO - 127.0.0.1 - - [2025-09-01 20:52:55] "GET /admin HTTP/1.1" 302 582 0.001706
+2025-09-01 20:52:55,569 - INFO - Login page accessed
+2025-09-01 20:52:55,571 - INFO - 127.0.0.1 - - [2025-09-01 20:52:55] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.002789
+2025-09-01 20:52:58,368 - INFO - Login attempt for username: admin
+2025-09-01 20:52:58,484 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:52:58,485 - INFO - 127.0.0.1 - - [2025-09-01 20:52:58] "POST /login HTTP/1.1" 200 4470 0.117701
+2025-09-01 20:53:23,888 - INFO - 127.0.0.1 - - [2025-09-01 20:53:23] "GET /admin HTTP/1.1" 302 582 0.001410
+2025-09-01 20:53:23,895 - INFO - Login page accessed
+2025-09-01 20:53:23,896 - INFO - 127.0.0.1 - - [2025-09-01 20:53:23] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.002340
+2025-09-01 20:53:27,292 - INFO - Login attempt for username: admin
+2025-09-01 20:53:27,417 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:53:27,418 - INFO - 127.0.0.1 - - [2025-09-01 20:53:27] "POST /login HTTP/1.1" 200 4470 0.126144
+2025-09-01 20:54:00,210 - INFO - AWS S3 client initialized for bucket: soothing-playlist
+2025-09-01 20:54:00,234 - INFO - Starting Broadcast App Server...
+2025-09-01 20:54:00,234 - INFO - Database initialized successfully
+2025-09-01 20:54:00,238 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 20:54:04,620 - INFO - Login attempt for username: admin
+2025-09-01 20:54:04,772 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:54:04,776 - INFO - 127.0.0.1 - - [2025-09-01 20:54:04] "POST /login HTTP/1.1" 200 4470 0.156571
+2025-09-01 20:54:08,768 - INFO - 127.0.0.1 - - [2025-09-01 20:54:08] "GET /admin HTTP/1.1" 302 582 0.001794
+2025-09-01 20:54:08,780 - INFO - Login page accessed
+2025-09-01 20:54:08,781 - INFO - 127.0.0.1 - - [2025-09-01 20:54:08] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.001354
+2025-09-01 20:54:13,644 - INFO - Login attempt for username: admin
+2025-09-01 20:54:13,784 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:54:13,785 - INFO - 127.0.0.1 - - [2025-09-01 20:54:13] "POST /login HTTP/1.1" 200 4470 0.141332
+2025-09-01 20:54:38,022 - INFO - AWS S3 client initialized for bucket: soothing-playlist
+2025-09-01 20:54:38,047 - INFO - Starting Broadcast App Server...
+2025-09-01 20:54:38,048 - INFO - Database initialized successfully
+2025-09-01 20:54:38,052 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 20:54:43,788 - INFO - 127.0.0.1 - - [2025-09-01 20:54:43] "GET /admin HTTP/1.1" 302 582 0.002572
+2025-09-01 20:54:43,794 - INFO - Login page accessed
+2025-09-01 20:54:43,804 - INFO - 127.0.0.1 - - [2025-09-01 20:54:43] "GET /login?next=%2Fadmin HTTP/1.1" 200 4478 0.010500
+2025-09-01 20:54:46,452 - INFO - Login attempt for username: harsh
+2025-09-01 20:54:46,589 - INFO - Successful login for user: harsh
+2025-09-01 20:54:46,589 - INFO - 127.0.0.1 - - [2025-09-01 20:54:46] "POST /login HTTP/1.1" 302 651 0.138156
+2025-09-01 20:54:46,594 - INFO - Home page accessed - User authenticated: True
+2025-09-01 20:54:46,594 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 20:54:46,598 - INFO - 127.0.0.1 - - [2025-09-01 20:54:46] "GET / HTTP/1.1" 200 24103 0.006672
+2025-09-01 20:54:46,719 - INFO - 127.0.0.1 - - [2025-09-01 20:54:46] "GET /socket.io/?EIO=4&transport=polling&t=Pa5uNZx HTTP/1.1" 200 254 0.000662
+2025-09-01 20:54:46,730 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 20:54:48,160 - INFO - Returning 5 songs
+2025-09-01 20:54:48,161 - INFO - 127.0.0.1 - - [2025-09-01 20:54:48] "GET /api/songs HTTP/1.1" 200 658 1.433767
+2025-09-01 20:54:48,163 - INFO - 127.0.0.1 - - [2025-09-01 20:54:48] "POST /socket.io/?EIO=4&transport=polling&t=Pa5uNa5&sid=qCnD-3e09qJ5OJJqAAAA HTTP/1.1" 200 195 0.000922
+2025-09-01 20:54:48,164 - INFO - 127.0.0.1 - - [2025-09-01 20:54:48] "GET /socket.io/?EIO=4&transport=polling&t=Pa5uNa6&sid=qCnD-3e09qJ5OJJqAAAA HTTP/1.1" 200 157 0.000172
+2025-09-01 20:54:48,173 - INFO - [CHAT] User 'harsh' (SID: ooUgBGuj9UDq280pAAAB) joined chat room: DEV-DANK
+2025-09-01 20:54:48,952 - INFO - User 'harsh' logged out
+2025-09-01 20:54:48,953 - INFO - 127.0.0.1 - - [2025-09-01 20:54:48] "GET /logout HTTP/1.1" 302 506 0.003897
+2025-09-01 20:54:48,960 - INFO - Login page accessed
+2025-09-01 20:54:48,962 - INFO - 127.0.0.1 - - [2025-09-01 20:54:48] "GET /login HTTP/1.1" 200 4468 0.001760
+2025-09-01 20:54:49,044 - INFO - User disconnected (SID: ooUgBGuj9UDq280pAAAB)
+2025-09-01 20:54:52,163 - INFO - Login attempt for username: admin
+2025-09-01 20:54:52,287 - WARNING - Failed login attempt for username: admin
+2025-09-01 20:54:52,287 - INFO - 127.0.0.1 - - [2025-09-01 20:54:52] "POST /login HTTP/1.1" 200 4470 0.125185
+2025-09-01 23:51:57,273 - INFO - AWS S3 client initialized for bucket: soothing-playlist
+2025-09-01 23:51:57,297 - INFO - Starting Broadcast App Server...
+2025-09-01 23:51:57,298 - INFO - Database initialized successfully
+2025-09-01 23:51:57,301 - INFO - Server starting on http://0.0.0.0:5000
+2025-09-01 23:52:02,046 - INFO - Login page accessed
+2025-09-01 23:52:02,058 - INFO - 127.0.0.1 - - [2025-09-01 23:52:02] "GET /login HTTP/1.1" 200 4098 0.013793
+2025-09-01 23:52:05,517 - INFO - Login attempt for username: harsh
+2025-09-01 23:52:05,643 - INFO - Successful login for user: harsh
+2025-09-01 23:52:05,643 - INFO - 127.0.0.1 - - [2025-09-01 23:52:05] "POST /login HTTP/1.1" 302 651 0.127314
+2025-09-01 23:52:05,649 - INFO - Home page accessed - User authenticated: True
+2025-09-01 23:52:05,649 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 23:52:05,653 - INFO - 127.0.0.1 - - [2025-09-01 23:52:05] "GET / HTTP/1.1" 200 24103 0.006746
+2025-09-01 23:52:05,778 - INFO - 127.0.0.1 - - [2025-09-01 23:52:05] "GET /socket.io/?EIO=4&transport=polling&t=Pa6Wy_D HTTP/1.1" 200 254 0.001138
+2025-09-01 23:52:05,786 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 23:52:06,394 - INFO - Returning 5 songs
+2025-09-01 23:52:06,395 - INFO - 127.0.0.1 - - [2025-09-01 23:52:06] "GET /api/songs HTTP/1.1" 200 658 0.611647
+2025-09-01 23:52:06,396 - INFO - 127.0.0.1 - - [2025-09-01 23:52:06] "POST /socket.io/?EIO=4&transport=polling&t=Pa6Wy_S&sid=pHoo7ARkJdFvPI8EAAAA HTTP/1.1" 200 195 0.000649
+2025-09-01 23:52:06,397 - INFO - 127.0.0.1 - - [2025-09-01 23:52:06] "GET /socket.io/?EIO=4&transport=polling&t=Pa6Wy_T&sid=pHoo7ARkJdFvPI8EAAAA HTTP/1.1" 200 157 0.000155
+2025-09-01 23:52:06,404 - INFO - [CHAT] User 'harsh' (SID: Z1UjBrWtdLvFRBRnAAAB) joined chat room: DEV-DANK
+2025-09-01 23:52:10,499 - INFO - Generating presigned URL for: Preet Re (PenduJatt.Com.Se).mp3
+2025-09-01 23:52:10,502 - INFO - 127.0.0.1 - - [2025-09-01 23:52:10] "GET /stream/Preet%20Re%20(PenduJatt.Com.Se).mp3 HTTP/1.1" 302 1423 0.005818
+2025-09-01 23:52:14,082 - INFO - 127.0.0.1 - - [2025-09-01 23:52:14] "GET /favicon.ico HTTP/1.1" 404 331 0.001835
+2025-09-01 23:53:12,342 - INFO - Login attempt for username: harsh
+2025-09-01 23:53:12,464 - INFO - Successful login for user: harsh
+2025-09-01 23:53:12,465 - INFO - 127.0.0.1 - - [2025-09-01 23:53:12] "POST /login HTTP/1.1" 302 650 0.123161
+2025-09-01 23:53:12,468 - INFO - Home page accessed - User authenticated: True
+2025-09-01 23:53:12,469 - INFO - User 'harsh' accessing broadcast page
+2025-09-01 23:53:12,469 - INFO - 127.0.0.1 - - [2025-09-01 23:53:12] "GET / HTTP/1.1" 200 24103 0.002060
+2025-09-01 23:53:17,707 - INFO - 127.0.0.1 - - [2025-09-01 23:53:17] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XEZ8 HTTP/1.1" 200 254 0.000691
+2025-09-01 23:53:17,715 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 23:53:18,368 - INFO - Returning 5 songs
+2025-09-01 23:53:18,368 - INFO - 127.0.0.1 - - [2025-09-01 23:53:18] "GET /api/songs HTTP/1.1" 200 658 0.655417
+2025-09-01 23:53:18,369 - INFO - 127.0.0.1 - - [2025-09-01 23:53:18] "POST /socket.io/?EIO=4&transport=polling&t=Pa6XEZD&sid=5yfEx76EclrHfHMwAAAC HTTP/1.1" 200 195 0.000485
+2025-09-01 23:53:18,370 - INFO - 127.0.0.1 - - [2025-09-01 23:53:18] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XEZF&sid=5yfEx76EclrHfHMwAAAC HTTP/1.1" 200 189 0.000176
+2025-09-01 23:53:18,375 - INFO - 127.0.0.1 - - [2025-09-01 23:53:18] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XEja&sid=5yfEx76EclrHfHMwAAAC HTTP/1.1" 200 157 0.000281
+2025-09-01 23:53:18,376 - INFO - 127.0.0.1 - - [2025-09-01 23:53:18] "POST /socket.io/?EIO=4&transport=polling&t=Pa6XEjb&sid=5yfEx76EclrHfHMwAAAC HTTP/1.1" 200 195 0.000453
+2025-09-01 23:53:18,378 - INFO - [CHAT] User 'harsh' (SID: 1Z3i3dCCNZ7t66wCAAAD) joined chat room: DEV-DANK
+2025-09-01 23:53:24,672 - INFO - Chat in 'DEV-DANK' from 'harsh': hi
+2025-09-01 23:53:31,888 - INFO - User disconnected (SID: 1Z3i3dCCNZ7t66wCAAAD)
+2025-09-01 23:53:31,893 - INFO - User 'harsh' logged out
+2025-09-01 23:53:31,894 - INFO - 127.0.0.1 - - [2025-09-01 23:53:31] "GET /logout HTTP/1.1" 302 506 0.003498
+2025-09-01 23:53:31,907 - INFO - Login page accessed
+2025-09-01 23:53:31,909 - INFO - 127.0.0.1 - - [2025-09-01 23:53:31] "GET /login HTTP/1.1" 200 4468 0.002562
+2025-09-01 23:53:51,930 - INFO - Login attempt for username: harsh1
+2025-09-01 23:53:52,058 - INFO - Successful login for user: harsh1
+2025-09-01 23:53:52,059 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "POST /login HTTP/1.1" 302 650 0.128697
+2025-09-01 23:53:52,062 - INFO - Home page accessed - User authenticated: True
+2025-09-01 23:53:52,062 - INFO - User 'harsh1' accessing broadcast page
+2025-09-01 23:53:52,062 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "GET / HTTP/1.1" 200 24111 0.001897
+2025-09-01 23:53:52,156 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XMzR HTTP/1.1" 200 254 0.000224
+2025-09-01 23:53:52,161 - INFO - Fetching songs from S3 bucket: soothing-playlist
+2025-09-01 23:53:52,774 - INFO - Returning 5 songs
+2025-09-01 23:53:52,775 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "GET /api/songs HTTP/1.1" 200 658 0.615668
+2025-09-01 23:53:52,777 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "POST /socket.io/?EIO=4&transport=polling&t=Pa6XMzV&sid=H2Z9WbAIcDlIQucEAAAE HTTP/1.1" 200 195 0.000510
+2025-09-01 23:53:52,777 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XMzW&sid=H2Z9WbAIcDlIQucEAAAE HTTP/1.1" 200 189 0.001826
+2025-09-01 23:53:52,782 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XN7C&sid=H2Z9WbAIcDlIQucEAAAE HTTP/1.1" 200 157 0.000267
+2025-09-01 23:53:52,784 - INFO - 127.0.0.1 - - [2025-09-01 23:53:52] "POST /socket.io/?EIO=4&transport=polling&t=Pa6XN7D&sid=H2Z9WbAIcDlIQucEAAAE HTTP/1.1" 200 195 0.000380
+2025-09-01 23:53:52,787 - INFO - [CHAT] User 'harsh1' (SID: 0i1V8bT_9AIdKrO8AAAF) joined chat room: DEV-DANK
+2025-09-01 23:54:13,944 - INFO - User disconnected (SID: 0i1V8bT_9AIdKrO8AAAF)
+2025-09-01 23:55:22,130 - INFO - User disconnected (SID: Z1UjBrWtdLvFRBRnAAAB)
+2025-09-01 23:55:23,523 - INFO - 127.0.0.1 - - [2025-09-01 23:55:23] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XjH0 HTTP/1.1" 200 254 0.000469
+2025-09-01 23:55:23,531 - INFO - 127.0.0.1 - - [2025-09-01 23:55:23] "POST /socket.io/?EIO=4&transport=polling&t=Pa6XjH7&sid=KigMF3QuTsG5wt7bAAAG HTTP/1.1" 200 195 0.000849
+2025-09-01 23:55:23,534 - INFO - 127.0.0.1 - - [2025-09-01 23:55:23] "GET /socket.io/?EIO=4&transport=polling&t=Pa6XjH8&sid=KigMF3QuTsG5wt7bAAAG HTTP/1.1" 200 157 0.000247
