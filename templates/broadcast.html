@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <title>Broadcast Room - {{ current_user.username }}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="alternate icon" href="{{ url_for('static', filename='favicon.svg') }}">
   <style>
     * {
       margin: 0;
@@ -448,7 +450,7 @@
 </head>
 <body>
   <div class="header">
-    <h1>Vibestream 🎶💬</h1>
+    <h1>Chattrax 🎶💬</h1>
     <div class="user-info">
       <span>Welcome, <strong>{{ current_user.username }}</strong></span>
       {% if current_user.is_admin %}
@@ -624,6 +626,51 @@
     // No sync in local mode
     function requestSync() { /* no-op */ }
 
+    // Request notification permission on page load
+    if ('Notification' in window) {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+    }
+
+    // Audio notification setup
+    const notificationAudio = new Audio("{{ url_for('static', filename='notify.mp3') }}");
+    notificationAudio.volume = 0.7;
+    
+
+    
+
+
+    // Function to show browser notifications
+    function showNotification(username, message) {
+      // Play notification sound for every message received
+      notificationAudio.currentTime = 0; // Reset to beginning
+      notificationAudio.play().catch(e => {
+        console.log('Could not play notification sound:', e);
+      });
+      
+      // Only show visual notifications if permission is granted and page is not in focus
+      if ('Notification' in window && Notification.permission === 'granted' && document.hidden) {
+        const notification = new Notification(`New message from ${username}`, {
+          body: message,
+          icon: "{{ url_for('static', filename='favicon.svg') }}",
+          tag: 'chat-message', // This will replace previous notifications
+          requireInteraction: false
+        });
+        
+        // Auto-close notification after 5 seconds
+        setTimeout(() => {
+          notification.close();
+        }, 5000);
+        
+        // Close notification when user clicks on it
+        notification.onclick = function() {
+          window.focus();
+          notification.close();
+        };
+      }
+    }
+
     // Event listeners
     playBtn.addEventListener('click', playSong);
     stopBtn.addEventListener('click', stopSong);
@@ -792,6 +839,9 @@
     socket.on('chat', (data) => {
       // data from others only (server uses include_self=False)
       appendChat(data.user, data.message);
+      
+      // Show browser notification for new messages
+      showNotification(data.user, data.message);
     });
 
     // When the server confirms join, it sends "joined" with our sid and list of others
