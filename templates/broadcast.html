@@ -360,6 +360,39 @@
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script>
     const socket = io(); // connects to same host
+
+    // WebRTC ICE/STUN configuration
+    const RTC_CONFIG = {
+      iceServers: [{ urls: ['stun:stun1.l.google.com:19302','stun:stun2.l.google.com:19302'] }]
+    };
+
+    // Ensure loadSongs is defined before any usage
+    async function loadSongs() {
+      try {
+        const res = await fetch('/api/songs', { credentials: 'same-origin' });
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = []; }
+        const select = document.getElementById('songSelect');
+        if (!select) return; // No music UI present
+        select.innerHTML = '<option value="">Select a song...</option>';
+        if (!Array.isArray(data) || data.length === 0) {
+          select.innerHTML = '<option value="">No songs found</option>';
+          return;
+        }
+        data.forEach(song => {
+          const option = document.createElement('option');
+          option.value = JSON.stringify({ name: song.name, s3_key: song.s3_key });
+          option.textContent = song.name;
+          select.appendChild(option);
+        });
+      } catch (e) {
+        const select = document.getElementById('songSelect');
+        if (select) select.innerHTML = '<option value="">Error loading songs</option>';
+        console.error('loadSongs failed:', e);
+      }
+    }
+
     const pcs = {};      // peerId -> RTCPeerConnection
     const localAudioEls = {}; // peerId -> audio element for remote audio
     let localStream = null;
@@ -392,85 +425,44 @@
     const audioPlayer = document.getElementById('audioPlayer');
     const queueList = document.getElementById('queueList');
 
-    const RTC_CONFIG = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+    let joinedAtMs = Date.now();
 
-    // Load songs from S3
-    async function loadSongs() {
-      try {
-        console.log('Loading songs from S3...');
-        const response = await fetch('/api/songs');
-        const songs = await response.json();
-        
-        songSelect.innerHTML = '<option value="">Select a song...</option>';
-        songs.forEach(song => {
-          const option = document.createElement('option');
-          option.value = JSON.stringify({name: song.name, s3_key: song.s3_key});
-          option.textContent = song.name;
-          songSelect.appendChild(option);
-        });
-        console.log(`Loaded ${songs.length} songs`);
-      } catch (error) {
-        console.error('Failed to load songs:', error);
-      }
-    }
-
-    // Play selected song
+    // Play selected song (local only)
     function playSong() {
       if (!songSelect.value) {
         alert('Please select a song first');
         return;
       }
-      
       const songData = JSON.parse(songSelect.value);
-      console.log('Playing song:', songData);
-      
-      // Show current song info
       currentSongInfo.style.display = 'block';
       currentSongName.textContent = songData.name;
-      currentSongUser.textContent = `Added by ${currentUsername}`;
-      
-      // Set audio source and play
+      currentSongUser.textContent = `You`;
       audioPlayer.src = `/stream/${songData.s3_key}`;
       audioPlayer.load();
-      audioPlayer.play().catch(e => {
-        console.log('Auto-play prevented:', e);
+      audioPlayer.play().catch(() => {
         alert('Click play on the audio player to start the song');
       });
-      
-      // Add to queue
-      addToQueue(songData);
     }
 
-    // Stop current song
+    // Stop is local only for now
     function stopSong() {
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
       currentSongInfo.style.display = 'none';
-      console.log('Song stopped');
     }
 
-    // Add song to queue
-    function addToQueue(songData) {
-      const queueItem = document.createElement('div');
-      queueItem.style.padding = '10px';
-      queueItem.style.margin = '5px 0';
-      queueItem.style.background = '#f8f9fa';
-      queueItem.style.borderRadius = '5px';
-      queueItem.style.border = '1px solid #e1e5e9';
-      queueItem.innerHTML = `
-        <div style="font-weight: 600;">${songData.name}</div>
-        <div style="font-size: 0.8rem; color: #666;">Added by ${currentUsername}</div>
-      `;
-      queueList.appendChild(queueItem);
-    }
+    // Disable room-wide song handler (no sync)
+    // socket.on('song_started', ...) removed for local-only playback
+
+    // No sync in local mode
+    function requestSync() { /* no-op */ }
 
     // Event listeners
     playBtn.addEventListener('click', playSong);
     stopBtn.addEventListener('click', stopSong);
 
-    // Audio player events
+    // Audio ended: just hide info
     audioPlayer.addEventListener('ended', () => {
-      console.log('Song ended');
       currentSongInfo.style.display = 'none';
     });
 
@@ -487,6 +479,7 @@
       socket.emit('join_chat', { room: chatRoom, name });
       chatStatus.textContent = `Chat: ${chatRoom}`;
       sendBtn.disabled = false;
+      // No room sync in local mode
     });
 
     socket.on('chat_history', (data) => {

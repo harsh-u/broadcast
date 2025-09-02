@@ -11,6 +11,8 @@ import boto3
 from botocore.exceptions import ClientError
 import urllib.parse
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
+import threading
 
 # Load environment variables
 load_dotenv()
@@ -20,16 +22,60 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "secret!")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///users.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Configure logging
+# Configure logging (single file, no backups)
+LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format=LOG_FORMAT,
     handlers=[
         logging.StreamHandler(),
         logging.FileHandler('app.log')
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Prune app.log to keep only the last 5 hours of entries (no backups)
+PRUNE_INTERVAL_SECONDS = 3600  # run hourly
+KEEP_HOURS = 5
+
+def _parse_log_time(line: str):
+    # Expect lines starting with: 'YYYY-MM-DD HH:MM:SS,mmm - ...'
+    try:
+        ts = line.split(' - ', 1)[0]
+        # Example: 2025-09-01 20:29:29,448
+        return datetime.strptime(ts, '%Y-%m-%d %H:%M:%S,%f')
+    except Exception:
+        return None
+
+def prune_app_log():
+    try:
+        if not os.path.exists('app.log'):
+            return
+        cutoff = datetime.now() - timedelta(hours=KEEP_HOURS)
+        with open('app.log', 'r', encoding='utf-8', errors='ignore') as f:
+            lines = f.readlines()
+        kept = []
+        for line in lines:
+            dt = _parse_log_time(line)
+            if dt is None or dt >= cutoff:
+                kept.append(line)
+        with open('app.log', 'w', encoding='utf-8') as f:
+            f.writelines(kept)
+    except Exception as e:
+        # Do not crash on pruning errors
+        logging.getLogger(__name__).warning(f'Log prune failed: {e}')
+
+_defuse = {'timer': None}
+
+def _schedule_prune():
+    prune_app_log()
+    t = threading.Timer(PRUNE_INTERVAL_SECONDS, _schedule_prune)
+    t.daemon = True
+    t.start()
+    _defuse['timer'] = t
+
+# Start pruning loop once at import time
+_schedule_prune()
 
 # AWS S3 Configuration
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -65,6 +111,9 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="gevent")
 ROOMS = {}  # room_name -> set(socket_id)
 CHAT_HISTORY = defaultdict(list)  # room_name -> [{user, message}]
 MAX_CHAT_HISTORY = 1000
+
+# Synchronized room playback state (in-memory)
+# CURRENT_SONG = {}  # room -> { 'song_name': str, 's3_key': str, 'started_at': float, 'started_by': str }
 
 # User model
 class User(UserMixin, db.Model):
@@ -327,6 +376,36 @@ def on_disconnect():
             logger.info(f"Removed user from room '{room}'. Room now has {len(members)} users")
             emit("peer-left", {"peer": sid}, room=room)
 
+# @socketio.on("play_song")
+# @login_required
+# def on_play_song(data):
+#     room = data.get("room")
+#     song_name = data.get("song_name")
+#     s3_key = data.get("s3_key")
+#     if not room or not song_name or not s3_key:
+#         return
+#     import time as _time
+#     CURRENT_SONG[room] = {
+#         "song_name": song_name,
+#         "s3_key": s3_key,
+#         "started_at": _time.time(),
+#         "started_by": current_user.username,
+#     }
+#     logger.info(f"Song started in room '{room}': {song_name} by {current_user.username}")
+#     emit("song_started", CURRENT_SONG[room], room=room)
+
+# @socketio.on("sync_song")
+# @login_required
+# def on_sync_song(data):
+#     room = data.get("room")
+#     if not room:
+#         return
+#     state = CURRENT_SONG.get(room)
+#     if state:
+#         # send only to requester
+#         emit("song_started", state)
+
+# # On chat join, also push current song (if any) to the newly joined user
 @socketio.on("join_chat")
 @login_required
 def on_join_chat(data):
@@ -337,7 +416,10 @@ def on_join_chat(data):
     logger.info(f"[CHAT] User '{current_user.username}' (SID: {sid}) joined chat room: {room}")
     # Send recent history to the joining client only
     emit("chat_history", {"messages": CHAT_HISTORY[room][-MAX_CHAT_HISTORY:]})
-    # No server join announcement
+    # # Send current song state if any (only to this client)
+    # state = CURRENT_SONG.get(room)
+    # if state:
+    #     emit("song_started", state)
 
 @socketio.on("leave_chat")
 @login_required
