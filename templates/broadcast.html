@@ -278,6 +278,173 @@
       text-align: left;
     }
   </style>
+
+<!-- Enhanced Gen-Z UI Theme -->
+<style>
+  :root {
+    --bg1: #0f1020;
+    --bg2: #14162b;
+    --glass: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.12);
+    --text: #e7e7f7;
+    --muted: #a8a8c7;
+    --primary1: #7c5cff;
+    --primary2: #00d4ff;
+    --accent: #ff6ec7;
+    --success: #18c964;
+    --danger: #ff4d4f;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+
+  body {
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.16), transparent),
+                radial-gradient(1000px 500px at 90% 0%, rgba(0,212,255,0.15), transparent),
+                linear-gradient(180deg, var(--bg1), var(--bg2));
+    color: var(--text);
+  }
+
+  .header {
+    background: linear-gradient(140deg, rgba(124,92,255,0.2), rgba(0,212,255,0.15));
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+  }
+
+  .main-container {
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+  }
+
+  .controls {
+    background: linear-gradient(140deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    border: 1px solid var(--glass-border);
+  }
+
+  input, select {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+  }
+  input::placeholder { color: var(--muted); }
+  select option { color: #111; }
+
+  button {
+    background: linear-gradient(135deg, var(--primary1), var(--primary2));
+    border: none;
+    color: white;
+    box-shadow: 0 6px 16px rgba(124,92,255,0.35);
+    transform: translateY(0);
+    transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 10px 24px rgba(124,92,255,0.45);
+  }
+  .logout-btn { background: linear-gradient(135deg, var(--danger), #ff7b7d) !important; }
+  .mute-btn { background: linear-gradient(135deg, var(--success), #72e6a8) !important; }
+
+  /* Tiles */
+  .tile {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--shadow);
+  }
+
+  /* Chat */
+  .chat-container {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+  }
+  .msg-bubble {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .msg-own .msg-bubble {
+    background: linear-gradient(135deg, var(--primary1), var(--accent));
+  }
+
+  /* Music Player override (remove inline look) */
+  #musicPlayer {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--shadow) !important;
+  }
+  #musicPlayer h3 { color: var(--text) !important; }
+  #currentSongInfo { background: rgba(255,255,255,0.05) !important; border: 1px solid var(--glass-border) !important; }
+
+  /* Status badges */
+  #status, #chatStatus, #musicStatus {
+    color: var(--muted);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* Floating gradient orbs */
+  .orb {
+    position: fixed; inset: auto auto 10% -5%; width: 380px; height: 380px; pointer-events: none;
+    background: radial-gradient(circle at 30% 30%, rgba(124,92,255,0.25), rgba(0,212,255,0.18), transparent 65%);
+    filter: blur(40px);
+    opacity: .55; z-index: 0; animation: float 10s ease-in-out infinite alternate;
+  }
+  .orb.orb-right { inset: 5% -5% auto auto; width: 420px; height: 420px; animation-duration: 12s; }
+
+  @keyframes float { to { transform: translateY(-18px) translateX(10px); opacity: .7; } }
+
+  /* Keep content above background orbs */
+  .header, .main-container { position: relative; z-index: 1; }
+</style>
+
+<!-- Visibility fixes: Header title and chat input -->
+<style>
+  /* Make the app title clearly visible */
+  .header h1 {
+    background: none !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  }
+
+  /* Strong contrast for chat input typing text */
+  #chatInput {
+    background: #1f2335 !important; /* deep contrast */
+    color: #ffffff !important;      /* bright text */
+    border: 1px solid rgba(255,255,255,0.18) !important;
+  }
+  #chatInput::placeholder { color: rgba(255,255,255,0.7) !important; }
+
+  /* Ensure all inputs remain readable */
+  input, select, textarea {
+    color: #ffffff !important;
+  }
+</style>
+
+<!-- High-contrast Now Playing section -->
+<style>
+  #currentSongInfo {
+    background: #161a2b !important;               /* darker panel for contrast */
+    border: 1px solid rgba(255,255,255,0.18) !important;
+  }
+  #currentSongInfo h4 {
+    color: #ffffff !important;                    /* bright label */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  }
+  #currentSongName {
+    color: #ffffff !important;                    /* bright song name */
+    font-weight: 700 !important;
+    letter-spacing: .2px;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.35);
+  }
+  #currentSongUser {
+    color: rgba(255,255,255,0.8) !important;      /* readable subtitle */
+  }
+</style>
+
+<div class="orb"></div>
+<div class="orb orb-right"></div>
+
 </head>
 <body>
   <div class="header">
